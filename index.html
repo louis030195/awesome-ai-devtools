@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniDev // The Ultimate AI Engineer & Developer Cockpit</title>
+  <meta name="description" content="All-in-one developer & AI engineer dashboard: Interactive Prompt Studio, MCP Configurator, DevToys Suite, AI Radar & Benchmarks.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#38bdf8',
+              purple: '#c084fc',
+              indigo: '#6366f1'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans selection:bg-sky-500 selection:text-white">
+
+  <!-- ========================================================================
+       TOP HEADER & NAVIGATION
+       ======================================================================== -->
+  <header class="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 p-0.5 shadow-lg shadow-sky-500/20 group-hover:shadow-sky-500/40 transition-all">
+          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+            <svg class="w-5 h-5 text-sky-400 group-hover:rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-sky-400 pulse-indicator"></span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-base tracking-tight text-white glow-text">OmniDev</span>
+            <span class="badge-tech bg-sky-950 text-sky-400 border border-sky-800/50 text-[10px]">v1.0</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono hidden sm:block">AI & Dev Cockpit</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Tabs -->
+      <nav class="hidden lg:flex items-center gap-1.5 p-1 rounded-xl bg-slate-900/60 border border-slate-800/70 text-xs font-medium">
+        <button onclick="App.switchTab('prompt-studio')" data-tab="prompt-studio" class="nav-tab-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 tab-active">
+          <span>⚡ Prompt Studio</span>
+        </button>
+        <button onclick="App.switchTab('mcp-builder')" data-tab="mcp-builder" class="nav-tab-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+          <span>🔌 MCP Hub</span>
+        </button>
+        <button onclick="App.switchTab('ai-radar')" data-tab="ai-radar" class="nav-tab-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+          <span>🎯 AI Radar</span>
+        </button>
+        <button onclick="App.switchTab('dev-tools')" data-tab="dev-tools" class="nav-tab-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+          <span>🛠️ DevToys Suite</span>
+        </button>
+        <button onclick="App.switchTab('cheatsheets')" data-tab="cheatsheets" class="nav-tab-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+          <span>📚 Cheatsheets</span>
+        </button>
+        <button onclick="App.switchTab('awesome-ai')" data-tab="awesome-ai" class="nav-tab-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+          <span>⭐ Awesome AI</span>
+        </button>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2">
+        <!-- Quick Command Palette Button -->
+        <button 
+          onclick="App.openCommandPalette()"
+          class="flex items-center gap-2 px-3 py-1.5 text-xs text-slate-400 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-lg transition-all">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span class="hidden sm:inline">Search...</span>
+          <kbd class="px-1.5 py-0.5 text-[10px] bg-slate-950 border border-slate-700/60 rounded font-mono text-slate-400">Ctrl K</kbd>
+        </button>
+
+        <!-- Sound Toggle -->
+        <button 
+          id="sound-toggle-btn"
+          onclick="App.toggleSound()"
+          title="Toggle Sound FX"
+          class="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-800 transition-colors">
+          <svg class="w-4 h-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+          </svg>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button 
+          onclick="App.toggleTheme()"
+          title="Toggle Light / Dark Mode"
+          class="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-800 transition-colors text-amber-400">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </button>
+
+        <!-- Star on GitHub Button -->
+        <a 
+          href="https://github.com/ilynx69/awesome-ai-devtools" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="glow-btn flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-sky-500 to-indigo-600 rounded-lg shadow-sm hover:opacity-95 transition-all">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          <span class="hidden sm:inline">Star</span>
+          <span class="bg-black/30 px-1.5 py-0.5 rounded text-[10px] font-mono">GitHub</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Sub-bar -->
+    <div class="lg:hidden flex items-center gap-1 px-4 py-2 border-t border-slate-800/60 overflow-x-auto text-xs font-medium no-scrollbar">
+      <button onclick="App.switchTab('prompt-studio')" data-tab="prompt-studio" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap tab-active">⚡ Prompts</button>
+      <button onclick="App.switchTab('mcp-builder')" data-tab="mcp-builder" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400">🔌 MCP Hub</button>
+      <button onclick="App.switchTab('ai-radar')" data-tab="ai-radar" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400">🎯 AI Radar</button>
+      <button onclick="App.switchTab('dev-tools')" data-tab="dev-tools" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400">🛠️ DevToys</button>
+      <button onclick="App.switchTab('cheatsheets')" data-tab="cheatsheets" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400">📚 Cheats</button>
+      <button onclick="App.switchTab('awesome-ai')" data-tab="awesome-ai" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400">⭐ Directory</button>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO BANNER
+       ======================================================================== -->
+  <section class="relative overflow-hidden border-b border-slate-800/80 bg-gradient-to-b from-slate-900/30 to-slate-950/60 py-10 px-4 sm:px-6 lg:px-8 bg-grid-pattern">
+    <div class="max-w-7xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-medium mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping"></span>
+        Curated for Modern Full-Stack & AI Developers
+      </div>
+      
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
+        The Open-Source <span class="bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">AI Engineer Cockpit</span>
+      </h1>
+      
+      <p class="max-w-2xl mx-auto text-sm sm:text-base text-slate-400 leading-relaxed mb-6">
+        Generate production prompts, configure Model Context Protocol (MCP) servers, inspect JWTs, decode hashes, analyze latency, and benchmark top AI models. 100% client-side, instant, and private.
+      </p>
+
+      <!-- Key Metrics Badges -->
+      <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-mono">
+        <div class="px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2">
+          <span class="text-sky-400 font-bold">30+</span>
+          <span class="text-slate-400">Battle-tested Prompts</span>
+        </div>
+        <div class="px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2">
+          <span class="text-purple-400 font-bold">10+</span>
+          <span class="text-slate-400">MCP Integrations</span>
+        </div>
+        <div class="px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2">
+          <span class="text-emerald-400 font-bold">0ms</span>
+          <span class="text-slate-400">Backend Lag (100% Client-Side)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       MAIN APP CONTENT CONTAINERS
+       ======================================================================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ----------------------------------------------------------------------
+         TAB 1: PROMPT STUDIO
+         ---------------------------------------------------------------------- -->
+    <section id="tab-prompt-studio" class="main-tab-content">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>⚡ Prompt Engineering Studio</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Select a scenario, tune variables, and export battle-tested system prompts.</p>
+        </div>
+        
+        <!-- Search & Filter bar -->
+        <div class="w-full md:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+          <div id="prompt-categories" class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0"></div>
+          <input 
+            type="text" 
+            id="prompt-search" 
+            placeholder="Search prompts..." 
+            class="px-3 py-1.5 text-xs bg-slate-900/90 border border-slate-800 rounded-lg text-slate-200 focus:outline-none focus:border-sky-500 transition-all font-mono" />
+        </div>
+      </div>
+
+      <!-- Studio Layout: Left Grid / Right Editor -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Prompt Cards List -->
+        <div class="lg:col-span-4 space-y-3 max-h-[750px] overflow-y-auto pr-1" id="prompt-cards-list">
+          <!-- Populated by PromptStudio.js -->
+        </div>
+
+        <!-- Right: Dynamic Variable Form & Live Output -->
+        <div class="lg:col-span-8 glass-panel rounded-2xl p-6 border border-slate-800 flex flex-col gap-5">
+          <div class="border-b border-slate-800/80 pb-4">
+            <h3 id="prompt-detail-title" class="text-lg font-bold text-white mb-1">Select a prompt</h3>
+            <p id="prompt-detail-desc" class="text-xs text-slate-400">Variables will populate below for real-time substitution.</p>
+          </div>
+
+          <!-- Variable Form -->
+          <div class="space-y-4" id="prompt-variables-form">
+            <!-- Dynamic Inputs -->
+          </div>
+
+          <!-- Live Output Preview -->
+          <div class="mt-2 space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-semibold text-slate-300 font-mono flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                Generated Prompt Preview
+              </label>
+              <div class="flex items-center gap-2">
+                <button 
+                  onclick="PromptStudio.downloadPrompt()" 
+                  class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  <span>Download .md</span>
+                </button>
+                <button 
+                  onclick="PromptStudio.copyPrompt()" 
+                  class="glow-btn text-xs px-3 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold shadow transition-all flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                  </svg>
+                  <span>Copy Prompt</span>
+                </button>
+              </div>
+            </div>
+            
+            <textarea 
+              id="prompt-preview-output" 
+              rows="10" 
+              class="w-full text-xs font-mono bg-slate-950/90 border border-slate-800 rounded-xl p-4 text-sky-200 focus:outline-none focus:border-sky-500 leading-relaxed resize-y"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         TAB 2: MCP BUILDER
+         ---------------------------------------------------------------------- -->
+    <section id="tab-mcp-builder" class="main-tab-content hidden">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>🔌 Model Context Protocol (MCP) Configurator</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Select and configure MCP servers for Claude Desktop, Cursor, and AI agents.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="MCPBuilder.selectAll()" class="text-xs px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all">Select All</button>
+          <button onclick="MCPBuilder.clearAll()" class="text-xs px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all">Clear</button>
+          <input 
+            type="text" 
+            id="mcp-search" 
+            placeholder="Filter MCP servers..." 
+            class="px-3 py-1.5 text-xs bg-slate-900 border border-slate-800 rounded-lg text-slate-200 font-mono focus:outline-none focus:border-sky-500" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- MCP Servers Catalog -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3" id="mcp-servers-grid">
+          <!-- Populated by mcpBuilder.js -->
+        </div>
+
+        <!-- Generated JSON Config & Path Instructions -->
+        <div class="lg:col-span-5 glass-panel rounded-2xl p-5 border border-slate-800 sticky top-20">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-mono font-semibold text-slate-300 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+              claude_desktop_config.json
+            </span>
+            <div class="flex items-center gap-2">
+              <button 
+                onclick="MCPBuilder.downloadConfig()" 
+                class="text-xs px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all">
+                Download
+              </button>
+              <button 
+                onclick="MCPBuilder.copyConfig()" 
+                class="glow-btn text-xs px-2.5 py-1 rounded bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold shadow transition-all">
+                Copy JSON
+              </button>
+            </div>
+          </div>
+
+          <pre id="mcp-config-json" class="text-xs font-mono bg-slate-950 p-4 rounded-xl border border-slate-800/90 text-sky-300 max-h-[400px] overflow-y-auto leading-relaxed"></pre>
+
+          <!-- File Location Quick Guide -->
+          <div class="mt-4 pt-4 border-t border-slate-800 text-[11px] text-slate-400 space-y-1.5">
+            <div class="font-semibold text-slate-300">File location on your OS:</div>
+            <div class="font-mono text-slate-500"><strong class="text-slate-400">Windows:</strong> %APPDATA%\Claude\claude_desktop_config.json</div>
+            <div class="font-mono text-slate-500"><strong class="text-slate-400">macOS:</strong> ~/Library/Application Support/Claude/claude_desktop_config.json</div>
+            <div class="font-mono text-slate-500"><strong class="text-slate-400">Linux:</strong> ~/.config/Claude/claude_desktop_config.json</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         TAB 3: AI RADAR & LATENCY
+         ---------------------------------------------------------------------- -->
+    <section id="tab-ai-radar" class="main-tab-content hidden">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>🎯 2026 AI Models & Performance Radar</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Live comparison matrix: context window, API cost, coding prowess, and speed.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="AIRadar.filterType('All')" data-type="All" class="radar-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-sky-500/20 text-sky-400 border border-sky-500/40">All</button>
+          <button onclick="AIRadar.filterType('Proprietary')" data-type="Proprietary" class="radar-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800/40 text-slate-400 border border-slate-700/50">Proprietary</button>
+          <button onclick="AIRadar.filterType('Open Weights')" data-type="Open Weights" class="radar-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800/40 text-slate-400 border border-slate-700/50">Open Weights</button>
+          <input 
+            type="text" 
+            id="ai-model-search" 
+            placeholder="Search models..." 
+            class="px-3 py-1.5 text-xs bg-slate-900 border border-slate-800 rounded-lg text-slate-200 font-mono focus:outline-none focus:border-sky-500" />
+        </div>
+      </div>
+
+      <!-- Models Table -->
+      <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden mb-10">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-900/90 border-b border-slate-800 text-xs font-mono text-slate-400 uppercase tracking-wider">
+                <th class="p-3.5">Model & Provider</th>
+                <th class="p-3.5">Context Window</th>
+                <th class="p-3.5">Price / 1M Tokens</th>
+                <th class="p-3.5">Coding Benchmark</th>
+                <th class="p-3.5">Inference Speed</th>
+                <th class="p-3.5">Best For</th>
+              </tr>
+            </thead>
+            <tbody id="ai-models-tbody" class="divide-y divide-slate-800/60">
+              <!-- Populated by aiRadar.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Latency Numbers Section -->
+      <div class="glass-panel rounded-2xl p-6 border border-slate-800">
+        <div class="mb-4">
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <span>⏱️ Latency Numbers Every Developer Should Know</span>
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Logarithmic scale comparison of hardware and network operation durations.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="latency-list">
+          <!-- Populated by aiRadar.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         TAB 4: DEVTOYS SUITE
+         ---------------------------------------------------------------------- -->
+    <section id="tab-dev-tools" class="main-tab-content hidden">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>🛠️ Developer Power Utilities (DevToys Suite)</span>
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Client-side offline tools for everyday software engineering tasks.</p>
+      </div>
+
+      <!-- Sub-tool navigation pills -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar">
+        <button onclick="DevTools.switchTool('jwt')" data-tool="jwt" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🔑 JWT Inspector</button>
+        <button onclick="DevTools.switchTool('json')" data-tool="json" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">✨ JSON Studio</button>
+        <button onclick="DevTools.switchTool('regex')" data-tool="regex" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🔍 Regex Playground</button>
+        <button onclick="DevTools.switchTool('crypto')" data-tool="crypto" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🔐 Hashes & UUIDs</button>
+        <button onclick="DevTools.switchTool('cron')" data-tool="cron" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">⏰ Cron Humanizer</button>
+        <button onclick="DevTools.switchTool('git')" data-tool="git" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🐙 Git Wizard</button>
+      </div>
+
+      <!-- 1. JWT Inspector -->
+      <div id="dev-tool-jwt" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white">JSON Web Token (JWT) Inspector</h3>
+          <button onclick="DevTools.loadSampleJWT()" class="text-xs text-sky-400 hover:underline font-mono">Load Sample Token</button>
+        </div>
+        <textarea 
+          id="jwt-input" 
+          rows="3" 
+          placeholder="Paste your eyJhbGciOi... JWT here" 
+          class="w-full text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-sky-200 focus:outline-none focus:border-sky-500"></textarea>
+        
+        <div id="jwt-status" class="text-xs font-mono py-1"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <span class="text-xs font-semibold text-slate-400 font-mono block mb-1">Header</span>
+            <pre id="jwt-header-output" class="text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-purple-300 min-h-[140px] overflow-x-auto">// Header</pre>
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-slate-400 font-mono block mb-1">Payload Claims</span>
+            <pre id="jwt-payload-output" class="text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-emerald-300 min-h-[140px] overflow-x-auto">// Payload</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. JSON Studio -->
+      <div id="dev-tool-json" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <h3 class="text-sm font-bold text-white">JSON Formatter, Validator & Minifier</h3>
+          <div class="flex items-center gap-2">
+            <button onclick="DevTools.loadSampleJSON()" class="text-xs text-sky-400 hover:underline font-mono mr-2">Load Sample</button>
+            <button onclick="DevTools.formatJSON(2)" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Beautify 2</button>
+            <button onclick="DevTools.formatJSON(4)" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Beautify 4</button>
+            <button onclick="DevTools.minifyJSON()" class="text-xs px-2.5 py-1 rounded bg-sky-500 text-slate-950 font-bold hover:bg-sky-400">Minify</button>
+          </div>
+        </div>
+        <textarea 
+          id="json-input" 
+          rows="14" 
+          placeholder="Paste JSON here..." 
+          class="w-full text-xs font-mono bg-slate-950 p-4 rounded-xl border border-slate-800 text-sky-200 focus:outline-none focus:border-sky-500 leading-relaxed"></textarea>
+        <div id="json-message" class="text-xs font-mono"></div>
+      </div>
+
+      <!-- 3. Regex Playground -->
+      <div id="dev-tool-regex" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white">Regular Expression Playground</h3>
+          <span id="regex-match-count" class="text-xs font-mono text-sky-400 font-semibold">0 matches</span>
+        </div>
+
+        <!-- Presets -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="text-xs text-slate-400 font-mono mr-1">Presets:</span>
+          <button onclick="DevTools.applyRegexPreset('^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$', 'gm', 'test@example.com\\ninvalid-email\\nadmin@sub.domain.org')" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Email</button>
+          <button onclick="DevTools.applyRegexPreset('https?:\\\\/\\\\/(www\\\\.)?[-a-zA-Z0-9@:%._\\\\+~#=]{1,256}\\\\.[a-zA-Z0-9()]{1,6}\\\\b([-a-zA-Z0-9()@:%_\\\\+.~#?&//=]*)', 'g', 'Visit https://github.com and http://localhost:3000 now')" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">URL</button>
+          <button onclick="DevTools.applyRegexPreset('\\\\b(?:\\\\d{1,3}\\\\.){3}\\\\d{1,3}\\\\b', 'g', 'Local IP: 192.168.1.1, Gateway: 10.0.0.254, Invalid: 999.999.999')" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">IPv4</button>
+          <button onclick="DevTools.applyRegexPreset('v?(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)(?:-((?:0|[1-9]\\\\d*|\\\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\\\.(?:0|[1-9]\\\\d*|\\\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\\\+([0-9a-zA-Z-]+(?:\\\\.[0-9a-zA-Z-]+)*))?', 'g', 'Releases: v1.2.3, 2.0.0-rc.1, 0.9.4+2025')" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">SemVer</button>
+        </div>
+
+        <div class="grid grid-cols-12 gap-3">
+          <div class="col-span-9 sm:col-span-10">
+            <input 
+              type="text" 
+              id="regex-pattern" 
+              value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" 
+              placeholder="Regex pattern..." 
+              class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-sky-300 focus:outline-none focus:border-sky-500" />
+          </div>
+          <div class="col-span-3 sm:col-span-2">
+            <input 
+              type="text" 
+              id="regex-flags" 
+              value="gm" 
+              placeholder="Flags (gm)" 
+              class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-slate-300 focus:outline-none focus:border-sky-500 text-center" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <span class="text-xs font-mono text-slate-400 block mb-1">Test String</span>
+            <textarea 
+              id="regex-test-string" 
+              rows="6" 
+              class="w-full text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-slate-200 focus:outline-none focus:border-sky-500">Contact us at support@omnidev.org or dev@company.io for assistance.</textarea>
+          </div>
+          <div>
+            <span class="text-xs font-mono text-slate-400 block mb-1">Live Match Highlights</span>
+            <div id="regex-output" class="text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-slate-200 min-h-[140px] whitespace-pre-wrap leading-relaxed"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Crypto & UUID Studio -->
+      <div id="dev-tool-crypto" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+        <h3 class="text-sm font-bold text-white">Cryptographic Hashes & UUID Studio</h3>
+        
+        <div>
+          <label class="text-xs font-mono text-slate-400 block mb-1">Input Text</label>
+          <input 
+            type="text" 
+            id="hash-input" 
+            value="Hello OmniDev AI 2026!" 
+            class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-sky-300 focus:outline-none focus:border-sky-500" />
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <span class="text-[11px] font-mono text-slate-400">SHA-256</span>
+            <input type="text" id="hash-sha256" readonly class="w-full text-xs font-mono bg-slate-950/80 p-2 rounded border border-slate-800 text-slate-300" />
+          </div>
+          <div>
+            <span class="text-[11px] font-mono text-slate-400">SHA-512</span>
+            <input type="text" id="hash-sha512" readonly class="w-full text-xs font-mono bg-slate-950/80 p-2 rounded border border-slate-800 text-slate-300" />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <span class="text-[11px] font-mono text-slate-400">Base64 Encoded</span>
+              <input type="text" id="hash-base64" readonly class="w-full text-xs font-mono bg-slate-950/80 p-2 rounded border border-slate-800 text-slate-300" />
+            </div>
+            <div>
+              <span class="text-[11px] font-mono text-slate-400">URL Encoded</span>
+              <input type="text" id="hash-url" readonly class="w-full text-xs font-mono bg-slate-950/80 p-2 rounded border border-slate-800 text-slate-300" />
+            </div>
+          </div>
+        </div>
+
+        <!-- UUID Generator -->
+        <div class="pt-4 border-t border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-semibold text-slate-300">UUID v4 Generator</span>
+            <div class="flex items-center gap-1.5">
+              <button onclick="DevTools.generateUUID(1)" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Gen 1</button>
+              <button onclick="DevTools.generateUUID(5)" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Gen 5</button>
+            </div>
+          </div>
+          <textarea id="uuid-output" rows="3" readonly class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-emerald-400"></textarea>
+        </div>
+      </div>
+
+      <!-- 5. Cron Humanizer -->
+      <div id="dev-tool-cron" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+        <h3 class="text-sm font-bold text-white">Cron Expression Humanizer</h3>
+        <div>
+          <label class="text-xs font-mono text-slate-400 block mb-1">Enter 5-part Cron Expression</label>
+          <input 
+            type="text" 
+            id="cron-input" 
+            value="*/15 * * * *" 
+            placeholder="*/15 * * * *" 
+            class="w-full text-sm font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-sky-400 focus:outline-none focus:border-sky-500 font-bold" />
+        </div>
+        <div class="p-4 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-300 text-sm font-medium flex items-center gap-2">
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span id="cron-description">Runs every 15 minutes</span>
+        </div>
+      </div>
+
+      <!-- 6. Git Wizard -->
+      <div id="dev-tool-git" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white">Git Disaster Recovery & Everyday Recipes</h3>
+          <span class="text-xs text-slate-400 font-mono">1-click copy commands</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="git-scenarios-list">
+          <!-- Populated by devTools.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         TAB 5: CHEATSHEETS
+         ---------------------------------------------------------------------- -->
+    <section id="tab-cheatsheets" class="main-tab-content hidden">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>📚 Developer Reference Cheatsheets</span>
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">HTTP status codes, Docker commands, and systems reference.</p>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+            <span>🌐 HTTP Response Status Codes</span>
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="cheatsheet-http-grid">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         TAB 6: AWESOME DIRECTORY
+         ---------------------------------------------------------------------- -->
+    <section id="tab-awesome-ai" class="main-tab-content hidden">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>⭐ Curated Awesome AI & Developer Tools</span>
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Hand-picked top tier open-source agents, frameworks, and productivity tools.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="awesome-tools-grid">
+        <!-- Populated by app.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       COMMAND PALETTE MODAL (Ctrl + K)
+       ======================================================================== -->
+  <div id="command-palette-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-20 p-4 hidden">
+    <div class="w-full max-w-xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="p-3 border-b border-slate-800 flex items-center gap-2.5">
+        <svg class="w-4 h-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input 
+          type="text" 
+          id="palette-input" 
+          placeholder="Search prompts, MCP servers, dev tools, or AI models..." 
+          class="w-full text-xs font-mono bg-transparent text-white placeholder-slate-500 focus:outline-none" />
+        <kbd onclick="App.closeCommandPalette()" class="px-1.5 py-0.5 text-[10px] bg-slate-800 border border-slate-700 rounded font-mono text-slate-400 cursor-pointer">ESC</kbd>
+      </div>
+      <div id="palette-results" class="max-h-80 overflow-y-auto p-2 space-y-1">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="mt-20 border-t border-slate-800/80 bg-slate-950/60 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-300">OmniDev</span>
+        <span>•</span>
+        <span>Crafted with ❤️ by <a href="https://github.com/ilynx69" target="_blank" class="text-sky-400 hover:underline font-medium">ilynx69</a></span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="https://github.com/ilynx69/awesome-ai-devtools" target="_blank" class="hover:text-white transition-colors">GitHub Repository</a>
+        <span>•</span>
+        <a href="https://github.com/ilynx69/awesome-ai-devtools/blob/main/LICENSE" target="_blank" class="hover:text-white transition-colors">MIT License</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/sound.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/promptStudio.js"></script>
+  <script src="js/mcpBuilder.js"></script>
+  <script src="js/aiRadar.js"></script>
+  <script src="js/devTools.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
