@@ -35,14 +35,14 @@ const MCPBuilder = {
     );
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div class="p-6 col-span-full text-center text-slate-500 text-sm">No MCP servers match "${searchTerm}".</div>`;
+      container.innerHTML = `<div class="p-6 col-span-full text-center text-zinc-500 text-xs">No MCP servers match "${searchTerm}".</div>`;
       return;
     }
 
     container.innerHTML = filtered.map(s => {
       const isSelected = this.selectedServers.has(s.id);
       return `
-        <div class="p-4 rounded-xl border transition-all ${isSelected ? 'bg-sky-500/10 border-sky-500/50 shadow-md shadow-sky-500/10' : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700'}">
+        <div class="clean-panel p-3.5 transition-all ${isSelected ? 'border-zinc-500 bg-zinc-850/60' : 'bg-zinc-900/40'}">
           <div class="flex items-start justify-between gap-3">
             <div class="flex items-center gap-2">
               <input 
@@ -50,16 +50,16 @@ const MCPBuilder = {
                 id="check-${s.id}" 
                 ${isSelected ? 'checked' : ''} 
                 onchange="MCPBuilder.toggleServer('${s.id}')"
-                class="w-4 h-4 rounded text-sky-500 bg-slate-950 border-slate-700 focus:ring-sky-500 cursor-pointer" />
-              <label for="check-${s.id}" class="font-semibold text-sm text-slate-200 cursor-pointer">${s.name}</label>
+                class="w-3.5 h-3.5 rounded text-blue-600 bg-zinc-950 border-zinc-700 focus:ring-0 cursor-pointer" />
+              <label for="check-${s.id}" class="font-medium text-xs text-zinc-200 cursor-pointer">${s.name}</label>
             </div>
-            <span class="badge-tech bg-slate-800/80 text-slate-300 border border-slate-700/50 text-[10px]">${s.category}</span>
+            <span class="badge-clean text-[10px]">${s.category}</span>
           </div>
 
-          <p class="text-xs text-slate-400 mt-2 mb-3 leading-relaxed">${s.description}</p>
+          <p class="text-xs text-zinc-400 mt-1.5 mb-2.5 leading-relaxed">${s.description}</p>
           
-          <div class="text-[11px] font-mono bg-slate-950/80 p-2 rounded-lg border border-slate-800/70 text-slate-300 overflow-x-auto">
-            <span class="text-sky-400">${s.command}</span> ${s.args.join(' ')}
+          <div class="text-[11px] font-mono bg-zinc-950 p-2 rounded border border-zinc-800 text-zinc-300 overflow-x-auto">
+            <span class="text-zinc-400">${s.command}</span> ${s.args.join(' ')}
           </div>
         </div>
       `;

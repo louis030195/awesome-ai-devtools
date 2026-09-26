@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OmniDev // The Ultimate AI Engineer & Developer Cockpit</title>
-  <meta name="description" content="All-in-one developer & AI engineer dashboard: Interactive Prompt Studio, Free Neural Copilot, MCP Configurator, DevToys Suite, AI Radar & System Design Capacity Calculator.">
+  <title>OmniDev — Developer & AI Engineering Suite</title>
+  <meta name="description" content="A focused, minimalist developer workbench: System design capacity calculator, free AI code assistant, dynamic prompt compiler, MCP configuration generator, and offline utilities.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   
   <!-- Tailwind CSS CDN -->
@@ -14,11 +14,15 @@
       darkMode: 'class',
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
           colors: {
-            brand: {
-              cyan: '#38bdf8',
-              purple: '#c084fc',
-              indigo: '#6366f1'
+            zinc: {
+              850: '#1c1c21',
+              900: '#121215',
+              950: '#09090b'
             }
           }
         }
@@ -26,78 +30,73 @@
     }
   </script>
 
-  <!-- Custom Styles -->
+  <!-- Custom Minimalist Styles -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans selection:bg-sky-500 selection:text-white">
+<body class="bg-[#09090b] text-[#f4f4f5] font-sans selection:bg-blue-600 selection:text-white">
 
   <!-- ========================================================================
-       TOP HEADER & NAVIGATION
+       TOP HEADER & NAVIGATION (Linear / Vercel style)
        ======================================================================== -->
-  <header class="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+  <header class="sticky top-0 z-40 w-full border-b border-[#27272a] bg-[#09090b]/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
       
       <!-- Brand Logo -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 p-0.5 shadow-lg shadow-sky-500/20 group-hover:shadow-sky-500/40 transition-all">
-          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-            <svg class="w-5 h-5 text-sky-400 group-hover:rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-sky-400 pulse-indicator"></span>
+      <a href="#" class="flex items-center gap-2.5 text-zinc-100 hover:text-white transition-colors group">
+        <div class="w-7 h-7 rounded-lg bg-zinc-900 border border-zinc-700/80 flex items-center justify-center text-blue-500 shadow-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
         </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-extrabold text-base tracking-tight text-white glow-text">OmniDev</span>
-            <span class="badge-tech bg-sky-950 text-sky-400 border border-sky-800/50 text-[10px]">v1.5</span>
-          </div>
-          <span data-i18n="brand_sub" class="text-[10px] text-slate-400 font-mono hidden sm:block">AI & Dev Cockpit</span>
+        <div class="flex items-center gap-2">
+          <span class="font-semibold text-sm tracking-tight text-zinc-100">OmniDev</span>
+          <span class="badge-clean text-[10px]">v1.5</span>
         </div>
       </a>
 
-      <!-- Desktop Nav Tabs -->
-      <nav class="hidden xl:flex items-center gap-1 p-1 rounded-xl bg-slate-900/60 border border-slate-800/70 text-xs font-medium">
-        <button onclick="App.switchTab('prompt-studio')" data-tab="prompt-studio" class="nav-tab-btn px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 tab-active">
-          <span data-i18n="nav_prompts">⚡ Prompt Studio</span>
+      <!-- Desktop Nav Tabs (Linear-style segmented pill bar) -->
+      <nav class="hidden lg:flex items-center gap-0.5 p-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-xs">
+        <button onclick="App.switchTab('prompt-studio')" data-tab="prompt-studio" class="tab-btn nav-tab-btn tab-active">
+          <span data-i18n="nav_prompts">Prompts</span>
         </button>
-        <button onclick="App.switchTab('neural-copilot')" data-tab="neural-copilot" class="nav-tab-btn px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
-          <span data-i18n="nav_copilot">🤖 AI Copilot</span>
+        <button onclick="App.switchTab('neural-copilot')" data-tab="neural-copilot" class="tab-btn nav-tab-btn">
+          <span data-i18n="nav_copilot">AI Copilot</span>
         </button>
-        <button onclick="App.switchTab('mcp-builder')" data-tab="mcp-builder" class="nav-tab-btn px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
-          <span data-i18n="nav_mcp">🔌 MCP Hub</span>
+        <button onclick="App.switchTab('mcp-builder')" data-tab="mcp-builder" class="tab-btn nav-tab-btn">
+          <span data-i18n="nav_mcp">MCP Hub</span>
         </button>
-        <button onclick="App.switchTab('ai-radar')" data-tab="ai-radar" class="nav-tab-btn px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
-          <span data-i18n="nav_radar">🎯 AI Radar</span>
+        <button onclick="App.switchTab('ai-radar')" data-tab="ai-radar" class="tab-btn nav-tab-btn">
+          <span data-i18n="nav_radar">Benchmarks</span>
         </button>
-        <button onclick="App.switchTab('dev-tools')" data-tab="dev-tools" class="nav-tab-btn px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
-          <span data-i18n="nav_devtools">🛠️ DevToys</span>
+        <button onclick="App.switchTab('dev-tools')" data-tab="dev-tools" class="tab-btn nav-tab-btn">
+          <span data-i18n="nav_devtools">DevTools</span>
         </button>
-        <button onclick="App.switchTab('cheatsheets')" data-tab="cheatsheets" class="nav-tab-btn px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
-          <span data-i18n="nav_cheatsheets">📚 Cheats & Scale</span>
+        <button onclick="App.switchTab('cheatsheets')" data-tab="cheatsheets" class="tab-btn nav-tab-btn">
+          <span data-i18n="nav_cheatsheets">Architecture</span>
         </button>
-        <button onclick="App.switchTab('awesome-ai')" data-tab="awesome-ai" class="nav-tab-btn px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
-          <span data-i18n="nav_directory">⭐ Directory</span>
+        <button onclick="App.switchTab('awesome-ai')" data-tab="awesome-ai" class="tab-btn nav-tab-btn">
+          <span data-i18n="nav_directory">Ecosystem</span>
         </button>
       </nav>
 
       <!-- Action Buttons & Controls -->
       <div class="flex items-center gap-2">
-        <!-- Language Switcher (EN / RU / ZH) -->
-        <div class="flex items-center p-0.5 rounded-lg bg-slate-900 border border-slate-800 text-xs font-mono">
-          <button onclick="window.i18n.setLanguage('en')" data-lang="en" class="lang-select-btn px-1.5 py-1 rounded transition-colors text-slate-400 hover:text-white" title="English">EN</button>
-          <button onclick="window.i18n.setLanguage('ru')" data-lang="ru" class="lang-select-btn px-1.5 py-1 rounded transition-colors text-slate-400 hover:text-white" title="Русский">RU</button>
-          <button onclick="window.i18n.setLanguage('zh')" data-lang="zh" class="lang-select-btn px-1.5 py-1 rounded transition-colors text-slate-400 hover:text-white" title="中文">ZH</button>
+        <!-- Language Switcher (Segmented) -->
+        <div class="flex items-center p-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-[11px] font-mono">
+          <button onclick="window.i18n.setLanguage('en')" data-lang="en" class="lang-select-btn px-2 py-0.5 rounded transition-all text-zinc-400 hover:text-zinc-200">EN</button>
+          <button onclick="window.i18n.setLanguage('ru')" data-lang="ru" class="lang-select-btn px-2 py-0.5 rounded transition-all text-zinc-400 hover:text-zinc-200">RU</button>
+          <button onclick="window.i18n.setLanguage('zh')" data-lang="zh" class="lang-select-btn px-2 py-0.5 rounded transition-all text-zinc-400 hover:text-zinc-200">ZH</button>
         </div>
 
         <!-- Quick Command Palette Button -->
         <button 
           onclick="App.openCommandPalette()"
-          class="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-slate-400 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-lg transition-all">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          class="flex items-center gap-2 px-2.5 py-1 text-xs text-zinc-400 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-md transition-all">
+          <svg class="w-3.5 h-3.5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <kbd class="px-1.5 py-0.5 text-[10px] bg-slate-950 border border-slate-700/60 rounded font-mono text-slate-400 hidden sm:inline">Ctrl K</kbd>
+          <span class="hidden sm:inline" data-i18n="search_placeholder">Search...</span>
+          <span class="kbd-shortcut">⌘K</span>
         </button>
 
         <!-- Sound Toggle -->
@@ -106,8 +105,8 @@
           onclick="App.toggleSound()"
           data-i18n-title="sound_tip"
           title="Toggle Sound FX"
-          class="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-800 transition-colors">
-          <svg class="w-4 h-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          class="p-1.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
           </svg>
         </button>
@@ -116,20 +115,20 @@
         <button 
           onclick="App.toggleTheme()"
           data-i18n-title="theme_tip"
-          title="Toggle Light / Dark Mode"
-          class="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-800 transition-colors text-amber-400">
+          title="Toggle Theme"
+          class="p-1.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-zinc-200 transition-colors">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
         </button>
 
-        <!-- Star on GitHub Button -->
+        <!-- GitHub Star Button -->
         <a 
           href="https://github.com/ilynx69/awesome-ai-devtools" 
           target="_blank" 
           rel="noopener noreferrer"
-          class="glow-btn flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-sky-500 to-indigo-600 rounded-lg shadow-sm hover:opacity-95 transition-all">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          class="btn-primary text-xs px-2.5 py-1">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
             <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
           </svg>
           <span data-i18n="star_btn">Star</span>
@@ -137,135 +136,125 @@
       </div>
     </div>
 
-    <!-- Mobile / Small screen Nav Sub-bar -->
-    <div class="xl:hidden flex items-center gap-1 px-4 py-2 border-t border-slate-800/60 overflow-x-auto text-xs font-medium no-scrollbar">
-      <button onclick="App.switchTab('prompt-studio')" data-tab="prompt-studio" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap tab-active" data-i18n="nav_prompts">⚡ Prompts</button>
-      <button onclick="App.switchTab('neural-copilot')" data-tab="neural-copilot" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400" data-i18n="nav_copilot">🤖 AI Copilot</button>
-      <button onclick="App.switchTab('mcp-builder')" data-tab="mcp-builder" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400" data-i18n="nav_mcp">🔌 MCP Hub</button>
-      <button onclick="App.switchTab('ai-radar')" data-tab="ai-radar" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400" data-i18n="nav_radar">🎯 AI Radar</button>
-      <button onclick="App.switchTab('dev-tools')" data-tab="dev-tools" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400" data-i18n="nav_devtools">🛠️ DevToys</button>
-      <button onclick="App.switchTab('cheatsheets')" data-tab="cheatsheets" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400" data-i18n="nav_cheatsheets">📚 Scale</button>
-      <button onclick="App.switchTab('awesome-ai')" data-tab="awesome-ai" class="nav-tab-btn px-2.5 py-1 rounded-md whitespace-nowrap text-slate-400" data-i18n="nav_directory">⭐ Directory</button>
+    <!-- Mobile Sub-Navigation -->
+    <div class="lg:hidden flex items-center gap-1 px-4 py-2 border-t border-zinc-800/80 overflow-x-auto text-xs no-scrollbar">
+      <button onclick="App.switchTab('prompt-studio')" data-tab="prompt-studio" class="tab-btn nav-tab-btn tab-active whitespace-nowrap" data-i18n="nav_prompts">Prompts</button>
+      <button onclick="App.switchTab('neural-copilot')" data-tab="neural-copilot" class="tab-btn nav-tab-btn whitespace-nowrap" data-i18n="nav_copilot">AI Copilot</button>
+      <button onclick="App.switchTab('mcp-builder')" data-tab="mcp-builder" class="tab-btn nav-tab-btn whitespace-nowrap" data-i18n="nav_mcp">MCP Hub</button>
+      <button onclick="App.switchTab('ai-radar')" data-tab="ai-radar" class="tab-btn nav-tab-btn whitespace-nowrap" data-i18n="nav_radar">Benchmarks</button>
+      <button onclick="App.switchTab('dev-tools')" data-tab="dev-tools" class="tab-btn nav-tab-btn whitespace-nowrap" data-i18n="nav_devtools">DevTools</button>
+      <button onclick="App.switchTab('cheatsheets')" data-tab="cheatsheets" class="tab-btn nav-tab-btn whitespace-nowrap" data-i18n="nav_cheatsheets">Architecture</button>
+      <button onclick="App.switchTab('awesome-ai')" data-tab="awesome-ai" class="tab-btn nav-tab-btn whitespace-nowrap" data-i18n="nav_directory">Ecosystem</button>
     </div>
   </header>
 
   <!-- ========================================================================
-       HERO BANNER
+       HERO / INTRO SECTION (Minimalist, Confident, Human-Crafted)
        ======================================================================== -->
-  <section class="relative overflow-hidden border-b border-slate-800/80 bg-gradient-to-b from-slate-900/30 to-slate-950/60 py-10 px-4 sm:px-6 lg:px-8 bg-grid-pattern">
-    <div class="max-w-7xl mx-auto text-center relative z-10">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-medium mb-4">
-        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping"></span>
-        <span data-i18n="hero_badge">Curated for Modern Full-Stack & AI Developers</span>
+  <section class="border-b border-[#27272a] bg-[#0c0d10] py-10 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 text-xs font-mono mb-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+        <span data-i18n="hero_badge">Production Developer Toolkit</span>
       </div>
       
-      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
-        <span data-i18n="hero_title_prefix">The Open-Source</span> <span data-i18n="hero_title_highlight" class="bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">AI Engineer Cockpit</span>
+      <h1 class="text-2xl sm:text-4xl font-semibold tracking-tight text-zinc-100 mb-3">
+        <span data-i18n="hero_title_prefix">The Modern Suite for</span> <span class="text-white font-bold" data-i18n="hero_title_highlight">AI & Software Engineers</span>
       </h1>
       
-      <p data-i18n="hero_desc" class="max-w-2xl mx-auto text-sm sm:text-base text-slate-400 leading-relaxed mb-6">
-        Generate production prompts, chat with free AI models, configure Model Context Protocol (MCP) servers, inspect JWTs, convert cURL to code, and benchmark top AI models.
+      <p data-i18n="hero_desc" class="max-w-2xl mx-auto text-sm text-zinc-400 leading-relaxed mb-6 font-normal">
+        A focused, zero-latency workbench. System design capacity calculator, free in-browser AI code assistant, dynamic prompt compiler, MCP configuration generator, and offline utilities.
       </p>
 
-      <!-- Key Metrics Badges -->
-      <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-mono">
-        <div class="px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2">
-          <span class="text-sky-400 font-bold">30+</span>
-          <span data-i18n="stat_prompts" class="text-slate-400">Battle-tested Prompts</span>
+      <!-- Key Metrics Strip -->
+      <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-zinc-400">
+        <div class="px-2.5 py-1 rounded-md bg-zinc-900/80 border border-zinc-800">
+          <strong class="text-zinc-200">30+</strong> <span data-i18n="stat_prompts">Production Prompts</span>
         </div>
-        <div class="px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2">
-          <span class="text-purple-400 font-bold">10+</span>
-          <span data-i18n="stat_mcp" class="text-slate-400">MCP Integrations</span>
+        <div class="px-2.5 py-1 rounded-md bg-zinc-900/80 border border-zinc-800">
+          <strong class="text-zinc-200">10+</strong> <span data-i18n="stat_mcp">MCP Integrations</span>
         </div>
-        <div class="px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2">
-          <span class="text-indigo-400 font-bold">Polyglot</span>
-          <span data-i18n="stat_polyglot" class="text-slate-400">JS, Python, Rust, TS</span>
+        <div class="px-2.5 py-1 rounded-md bg-zinc-900/80 border border-zinc-800">
+          <strong class="text-zinc-200">Polyglot</strong> <span data-i18n="stat_polyglot">JS, Python, Rust, TS</span>
         </div>
-        <div class="px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2">
-          <span class="text-emerald-400 font-bold">0ms</span>
-          <span data-i18n="stat_client" class="text-slate-400">100% Client-Side & Private</span>
+        <div class="px-2.5 py-1 rounded-md bg-zinc-900/80 border border-zinc-800">
+          <strong class="text-emerald-400">100%</strong> <span data-i18n="stat_client">Client-Side</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ========================================================================
-       MAIN APP CONTENT CONTAINERS
+       MAIN APPLICATION WORKSPACES
        ======================================================================== -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
 
     <!-- ----------------------------------------------------------------------
          TAB 1: PROMPT STUDIO
          ---------------------------------------------------------------------- -->
     <section id="tab-prompt-studio" class="main-tab-content">
-      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-zinc-800/60">
         <div>
-          <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            <span data-i18n="ps_title">⚡ Prompt Engineering Studio</span>
-          </h2>
-          <p data-i18n="ps_desc" class="text-xs text-slate-400 mt-1">Select a scenario, tune variables, and test live with our built-in AI Copilot.</p>
+          <h2 class="text-base font-semibold text-zinc-100" data-i18n="ps_title">Prompt Engineering Studio</h2>
+          <p data-i18n="ps_desc" class="text-xs text-zinc-400 mt-0.5">Production-ready prompt templates with live variable compilation and direct AI testing.</p>
         </div>
         
         <!-- Search & Filter bar -->
-        <div class="w-full md:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-          <div id="prompt-categories" class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0"></div>
+        <div class="w-full sm:w-auto flex items-center gap-2">
+          <div id="prompt-categories" class="flex items-center gap-1 overflow-x-auto"></div>
           <input 
             type="text" 
             id="prompt-search" 
             data-i18n-placeholder="ps_search"
             placeholder="Search prompts..." 
-            class="px-3 py-1.5 text-xs bg-slate-900/90 border border-slate-800 rounded-lg text-slate-200 focus:outline-none focus:border-sky-500 transition-all font-mono" />
+            class="clean-input px-2.5 py-1 text-xs w-48 focus:w-60 transition-all" />
         </div>
       </div>
 
-      <!-- Studio Layout: Left Grid / Right Editor -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- Studio Layout: Left Master List / Right Detail Form -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         
         <!-- Left: Prompt Cards List -->
-        <div class="lg:col-span-4 space-y-3 max-h-[750px] overflow-y-auto pr-1" id="prompt-cards-list">
+        <div class="lg:col-span-4 space-y-2 max-h-[720px] overflow-y-auto pr-1" id="prompt-cards-list">
           <!-- Populated by PromptStudio.js -->
         </div>
 
         <!-- Right: Dynamic Variable Form & Live Output -->
-        <div class="lg:col-span-8 glass-panel rounded-2xl p-6 border border-slate-800 flex flex-col gap-5">
-          <div class="border-b border-slate-800/80 pb-4">
-            <h3 id="prompt-detail-title" class="text-lg font-bold text-white mb-1">Select a prompt</h3>
-            <p id="prompt-detail-desc" class="text-xs text-slate-400">Variables will populate below for real-time substitution.</p>
+        <div class="lg:col-span-8 clean-panel p-5 space-y-5">
+          <div class="border-b border-zinc-800/80 pb-3">
+            <h3 id="prompt-detail-title" class="text-sm font-semibold text-zinc-100">Select a prompt</h3>
+            <p id="prompt-detail-desc" class="text-xs text-zinc-400 mt-0.5">Variables will populate below for real-time substitution.</p>
           </div>
 
-          <!-- Variable Form -->
-          <div class="space-y-4" id="prompt-variables-form">
+          <!-- Variable Form Inputs -->
+          <div class="space-y-3" id="prompt-variables-form">
             <!-- Dynamic Inputs -->
           </div>
 
-          <!-- Live Output Preview & Action buttons -->
-          <div class="mt-2 space-y-2">
+          <!-- Output Box & Actions -->
+          <div class="pt-2 space-y-2">
             <div class="flex items-center justify-between flex-wrap gap-2">
-              <label class="text-xs font-semibold text-slate-300 font-mono flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-sky-400"></span>
-                <span data-i18n="ps_preview_title">Generated Prompt Preview</span>
-              </label>
-              <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-xs font-mono font-medium text-zinc-300" data-i18n="ps_preview_title">Compiled Prompt Output</span>
+              <div class="flex items-center gap-2">
                 <button 
                   onclick="PromptStudio.sendToCopilot()" 
-                  class="glow-btn text-xs px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow transition-all flex items-center gap-1">
-                  <span>🤖</span>
-                  <span data-i18n="ps_send_to_ai">Send to AI Copilot</span>
+                  class="btn-secondary text-xs px-2.5 py-1 text-blue-400 hover:text-blue-300">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span data-i18n="ps_send_to_ai">Test with AI</span>
                 </button>
                 <button 
                   onclick="PromptStudio.downloadPrompt()" 
-                  class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all flex items-center gap-1">
+                  class="btn-secondary text-xs px-2.5 py-1">
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
-                  <span data-i18n="ps_download_md">Download .md</span>
+                  <span data-i18n="ps_download_md">Export Markdown</span>
                 </button>
                 <button 
                   onclick="PromptStudio.copyPrompt()" 
-                  class="text-xs px-3 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold shadow transition-all flex items-center gap-1">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                  </svg>
+                  class="btn-primary text-xs px-3 py-1">
                   <span data-i18n="ps_copy_prompt">Copy Prompt</span>
                 </button>
               </div>
@@ -273,8 +262,8 @@
             
             <textarea 
               id="prompt-preview-output" 
-              rows="9" 
-              class="w-full text-xs font-mono bg-slate-950/90 border border-slate-800 rounded-xl p-4 text-sky-200 focus:outline-none focus:border-sky-500 leading-relaxed resize-y"></textarea>
+              rows="8" 
+              class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed resize-y"></textarea>
           </div>
         </div>
 
@@ -282,105 +271,93 @@
     </section>
 
     <!-- ----------------------------------------------------------------------
-         TAB 2: NEURAL COPILOT & AI CODE LAB (FREE NEURAL NETWORK)
+         TAB 2: AI COPILOT & CODE LAB (FREE NEURAL ENGINE)
          ---------------------------------------------------------------------- -->
     <section id="tab-neural-copilot" class="main-tab-content hidden">
-      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-zinc-800/60">
         <div>
-          <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            <span data-i18n="ai_title">🤖 Neural Copilot & AI Code Lab</span>
-          </h2>
-          <p data-i18n="ai_desc" class="text-xs text-slate-400 mt-1">Free in-browser AI Assistant powered by cloud models and offline heuristic engines. Zero cost.</p>
+          <h2 class="text-base font-semibold text-zinc-100" data-i18n="ai_title">AI Code Copilot & Lab</h2>
+          <p data-i18n="ai_desc" class="text-xs text-zinc-400 mt-0.5">Interactive code assistant. Run security audits, clean refactoring, and test synthesis with free cloud or offline heuristic engines.</p>
         </div>
 
         <!-- AI Engine Provider Selector -->
         <div class="flex items-center gap-2">
-          <label data-i18n="ai_provider_label" class="text-xs text-slate-400 font-mono hidden sm:inline">AI Engine:</label>
+          <span data-i18n="ai_provider_label" class="text-xs font-mono text-zinc-400">Engine:</span>
           <select 
             id="ai-provider-select" 
-            class="px-3 py-1.5 text-xs bg-slate-900 border border-slate-800 rounded-lg text-sky-300 font-mono focus:outline-none focus:border-sky-500">
+            class="clean-input px-2.5 py-1 text-xs text-zinc-200">
             <option value="free" data-i18n="ai_provider_free">Free Cloud AI (Pollinations / DeepSeek)</option>
-            <option value="offline" data-i18n="ai_provider_offline">Offline Heuristic Analyzer (Zero-Lag / 100% Private)</option>
+            <option value="offline" data-i18n="ai_provider_offline">Offline Heuristics (Private & Instant)</option>
             <option value="ollama" data-i18n="ai_provider_ollama">Local Ollama (localhost:11434)</option>
-            <option value="custom" data-i18n="ai_provider_custom">Custom API (Groq / OpenRouter / OpenAI)</option>
+            <option value="custom" data-i18n="ai_provider_custom">Custom API (Groq / OpenRouter)</option>
           </select>
         </div>
       </div>
 
-      <!-- Custom API Config Accordion (hidden by default unless selected) -->
-      <div id="ai-custom-config-panel" class="glass-panel p-4 rounded-xl border border-slate-800 mb-6 hidden space-y-3">
+      <!-- Custom API Config Drawer -->
+      <div id="ai-custom-config-panel" class="clean-panel p-4 mb-4 hidden space-y-3">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label data-i18n="ai_custom_key_label" class="block text-xs font-mono text-slate-400 mb-1">API Key (Stored locally in browser):</label>
-            <input type="password" id="ai-custom-key" placeholder="gsk_... or sk-..." class="w-full text-xs font-mono bg-slate-950 p-2 rounded-lg border border-slate-800 text-slate-200 focus:outline-none focus:border-sky-500" />
+            <label data-i18n="ai_custom_key_label" class="block text-xs font-mono text-zinc-400 mb-1">API Key (Stored locally in browser):</label>
+            <input type="password" id="ai-custom-key" placeholder="gsk_... or sk-..." class="clean-input w-full p-2" />
           </div>
           <div>
-            <label data-i18n="ai_custom_endpoint_label" class="block text-xs font-mono text-slate-400 mb-1">Base URL:</label>
-            <input type="text" id="ai-custom-endpoint" value="https://api.groq.com/openai/v1/chat/completions" class="w-full text-xs font-mono bg-slate-950 p-2 rounded-lg border border-slate-800 text-slate-200 focus:outline-none focus:border-sky-500" />
+            <label data-i18n="ai_custom_endpoint_label" class="block text-xs font-mono text-zinc-400 mb-1">Base URL:</label>
+            <input type="text" id="ai-custom-endpoint" value="https://api.groq.com/openai/v1/chat/completions" class="clean-input w-full p-2" />
           </div>
         </div>
       </div>
 
-      <!-- Quick Action Prompt Buttons -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar">
-        <span class="text-xs text-slate-400 font-mono mr-1">Quick:</span>
-        <button onclick="AIEngine.applyQuickAction('audit')" class="px-2.5 py-1 text-xs rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 whitespace-nowrap transition-all" data-i18n="ai_quick_audit">🛡️ Security Audit</button>
-        <button onclick="AIEngine.applyQuickAction('refactor')" class="px-2.5 py-1 text-xs rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/30 whitespace-nowrap transition-all" data-i18n="ai_quick_refactor">✨ Clean Refactor</button>
-        <button onclick="AIEngine.applyQuickAction('tests')" class="px-2.5 py-1 text-xs rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap transition-all" data-i18n="ai_quick_tests">🧪 Generate Tests</button>
-        <button onclick="AIEngine.applyQuickAction('convert')" class="px-2.5 py-1 text-xs rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 whitespace-nowrap transition-all" data-i18n="ai_quick_convert">🔄 Convert to Rust/Python</button>
-        <button onclick="AIEngine.applyQuickAction('complexity')" class="px-2.5 py-1 text-xs rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 whitespace-nowrap transition-all" data-i18n="ai_quick_complexity">📊 Big-O Complexity</button>
+      <!-- Quick Action Pills -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-4 no-scrollbar">
+        <button onclick="AIEngine.applyQuickAction('audit')" class="btn-secondary text-xs px-2.5 py-1" data-i18n="ai_quick_audit">Security Audit</button>
+        <button onclick="AIEngine.applyQuickAction('refactor')" class="btn-secondary text-xs px-2.5 py-1" data-i18n="ai_quick_refactor">Clean Refactor</button>
+        <button onclick="AIEngine.applyQuickAction('tests')" class="btn-secondary text-xs px-2.5 py-1" data-i18n="ai_quick_tests">Generate Unit Tests</button>
+        <button onclick="AIEngine.applyQuickAction('convert')" class="btn-secondary text-xs px-2.5 py-1" data-i18n="ai_quick_convert">Convert to Rust/Python</button>
+        <button onclick="AIEngine.applyQuickAction('complexity')" class="btn-secondary text-xs px-2.5 py-1" data-i18n="ai_quick_complexity">Big-O Complexity</button>
       </div>
 
       <!-- AI Workbench Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start">
         
         <!-- Left: Input & Prompt -->
-        <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-3">
+        <div class="clean-panel p-4 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-300 font-mono flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-sky-400"></span>
-              Input / Query
-            </span>
-            <button id="ai-clear-btn" class="text-xs text-slate-400 hover:text-white font-mono" data-i18n="ai_btn_clear">Clear</button>
+            <span class="text-xs font-mono font-medium text-zinc-300">Input / Code</span>
+            <button id="ai-clear-btn" class="text-xs text-zinc-500 hover:text-zinc-300 font-mono" data-i18n="ai_btn_clear">Clear</button>
           </div>
           
           <textarea 
             id="ai-input-text" 
-            rows="14" 
+            rows="13" 
             data-i18n-placeholder="ai_input_placeholder"
             placeholder="Paste code, ask questions, or run prompt tests here..." 
-            class="w-full text-xs font-mono bg-slate-950 p-4 rounded-xl border border-slate-800 text-sky-200 focus:outline-none focus:border-sky-500 leading-relaxed resize-y"></textarea>
+            class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed resize-y"></textarea>
 
-          <div class="flex items-center justify-between pt-2">
-            <div id="ai-status-indicator" class="text-xs font-mono"></div>
+          <div class="flex items-center justify-between pt-1">
+            <div id="ai-status-indicator" class="text-xs font-mono text-zinc-400"></div>
             <button 
               id="ai-run-btn" 
-              class="glow-btn px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-lg shadow-sky-500/20 hover:opacity-95 transition-all flex items-center gap-1.5">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              <span data-i18n="ai_btn_run">Run AI</span>
+              class="btn-primary text-xs px-3.5 py-1.5 font-medium">
+              <span data-i18n="ai_btn_run">Run Analysis</span>
             </button>
           </div>
         </div>
 
         <!-- Right: AI Output Stream -->
-        <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-3">
+        <div class="clean-panel p-4 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-300 font-mono flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span data-i18n="ai_output_label">AI Output & Analysis</span>
-            </span>
+            <span class="text-xs font-mono font-medium text-zinc-300" data-i18n="ai_output_label">Analysis & Output</span>
             <button 
               onclick="DevTools.copySnippet(document.getElementById('ai-output-text').textContent)" 
-              class="text-xs text-sky-400 hover:text-sky-300 font-mono px-2 py-1 rounded bg-sky-500/10 border border-sky-500/30">
+              class="btn-secondary text-xs px-2 py-0.5 font-mono">
               Copy Output
             </button>
           </div>
           
           <pre 
             id="ai-output-text" 
-            class="w-full text-xs font-mono bg-slate-950 p-4 rounded-xl border border-slate-800 text-slate-200 min-h-[380px] max-h-[600px] overflow-y-auto whitespace-pre-wrap leading-relaxed">// AI response will stream here...</pre>
+            class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 min-h-[340px] max-h-[560px] overflow-y-auto whitespace-pre-wrap leading-relaxed">// Output will appear here...</pre>
         </div>
 
       </div>
@@ -390,108 +367,101 @@
          TAB 3: MCP BUILDER
          ---------------------------------------------------------------------- -->
     <section id="tab-mcp-builder" class="main-tab-content hidden">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-zinc-800/60">
         <div>
-          <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            <span data-i18n="mcp_title">🔌 Model Context Protocol (MCP) Configurator</span>
-          </h2>
-          <p data-i18n="mcp_desc" class="text-xs text-slate-400 mt-1">Configure MCP servers for Claude Desktop, Cursor, and autonomous agents.</p>
+          <h2 class="text-base font-semibold text-zinc-100" data-i18n="mcp_title">Model Context Protocol (MCP) Configurator</h2>
+          <p data-i18n="mcp_desc" class="text-xs text-zinc-400 mt-0.5">Select servers to instantly generate a validated claude_desktop_config.json file.</p>
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="MCPBuilder.selectAll()" data-i18n="mcp_select_all" class="text-xs px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all">Select All</button>
-          <button onclick="MCPBuilder.clearAll()" data-i18n="mcp_clear" class="text-xs px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all">Clear</button>
+          <button onclick="MCPBuilder.selectAll()" data-i18n="mcp_select_all" class="btn-secondary text-xs px-2.5 py-1">Select All</button>
+          <button onclick="MCPBuilder.clearAll()" data-i18n="mcp_clear" class="btn-secondary text-xs px-2.5 py-1">Deselect All</button>
           <input 
             type="text" 
             id="mcp-search" 
             data-i18n-placeholder="mcp_search"
             placeholder="Filter MCP servers..." 
-            class="px-3 py-1.5 text-xs bg-slate-900 border border-slate-800 rounded-lg text-slate-200 font-mono focus:outline-none focus:border-sky-500" />
+            class="clean-input px-2.5 py-1 text-xs w-44" />
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         <!-- MCP Servers Catalog -->
         <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3" id="mcp-servers-grid">
           <!-- Populated by mcpBuilder.js -->
         </div>
 
         <!-- Generated JSON Config & Path Instructions -->
-        <div class="lg:col-span-5 glass-panel rounded-2xl p-5 border border-slate-800 sticky top-20">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-mono font-semibold text-slate-300 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-              claude_desktop_config.json
-            </span>
+        <div class="lg:col-span-5 clean-panel p-4 sticky top-16 space-y-3">
+          <div class="flex items-center justify-between border-b border-zinc-800/80 pb-2">
+            <span class="text-xs font-mono font-medium text-zinc-300">claude_desktop_config.json</span>
             <div class="flex items-center gap-2">
               <button 
                 onclick="MCPBuilder.downloadConfig()" 
                 data-i18n="mcp_download"
-                class="text-xs px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all">
+                class="btn-secondary text-xs px-2 py-0.5">
                 Download
               </button>
               <button 
                 onclick="MCPBuilder.copyConfig()" 
                 data-i18n="mcp_copy"
-                class="glow-btn text-xs px-2.5 py-1 rounded bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold shadow transition-all">
+                class="btn-primary text-xs px-2.5 py-0.5">
                 Copy JSON
               </button>
             </div>
           </div>
 
-          <pre id="mcp-config-json" class="text-xs font-mono bg-slate-950 p-4 rounded-xl border border-slate-800/90 text-sky-300 max-h-[400px] overflow-y-auto leading-relaxed"></pre>
+          <pre id="mcp-config-json" class="text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-300 max-h-[380px] overflow-y-auto leading-relaxed"></pre>
 
           <!-- File Location Quick Guide -->
-          <div class="mt-4 pt-4 border-t border-slate-800 text-[11px] text-slate-400 space-y-1.5">
-            <div class="font-semibold text-slate-300" data-i18n="mcp_os_paths">File location on your OS:</div>
-            <div class="font-mono text-slate-500"><strong class="text-slate-400">Windows:</strong> %APPDATA%\Claude\claude_desktop_config.json</div>
-            <div class="font-mono text-slate-500"><strong class="text-slate-400">macOS:</strong> ~/Library/Application Support/Claude/claude_desktop_config.json</div>
-            <div class="font-mono text-slate-500"><strong class="text-slate-400">Linux:</strong> ~/.config/Claude/claude_desktop_config.json</div>
+          <div class="pt-2 border-t border-zinc-800 text-[11px] text-zinc-400 space-y-1">
+            <div class="font-medium text-zinc-300" data-i18n="mcp_os_paths">Configuration file path by OS:</div>
+            <div class="font-mono text-zinc-500"><strong class="text-zinc-400">Windows:</strong> %APPDATA%\Claude\claude_desktop_config.json</div>
+            <div class="font-mono text-zinc-500"><strong class="text-zinc-400">macOS:</strong> ~/Library/Application Support/Claude/claude_desktop_config.json</div>
+            <div class="font-mono text-zinc-500"><strong class="text-zinc-400">Linux:</strong> ~/.config/Claude/claude_desktop_config.json</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ----------------------------------------------------------------------
-         TAB 4: AI RADAR & LATENCY
+         TAB 4: AI RADAR & BENCHMARKS
          ---------------------------------------------------------------------- -->
     <section id="tab-ai-radar" class="main-tab-content hidden">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-zinc-800/60">
         <div>
-          <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            <span data-i18n="radar_title">🎯 2026 AI Models & Performance Radar</span>
-          </h2>
-          <p data-i18n="radar_desc" class="text-xs text-slate-400 mt-1">Live comparison matrix: context window, API cost, coding prowess, and speed.</p>
+          <h2 class="text-base font-semibold text-zinc-100" data-i18n="radar_title">AI Model Benchmarks & Comparison</h2>
+          <p data-i18n="radar_desc" class="text-xs text-zinc-400 mt-0.5">Compare context windows, inference pricing, generation speed, and coding benchmarks.</p>
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="AIRadar.filterType('All')" data-type="All" data-i18n="radar_all" class="radar-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-sky-500/20 text-sky-400 border border-sky-500/40">All</button>
-          <button onclick="AIRadar.filterType('Proprietary')" data-type="Proprietary" data-i18n="radar_proprietary" class="radar-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800/40 text-slate-400 border border-slate-700/50">Proprietary</button>
-          <button onclick="AIRadar.filterType('Open Weights')" data-type="Open Weights" data-i18n="radar_open" class="radar-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800/40 text-slate-400 border border-slate-700/50">Open Weights</button>
+          <button onclick="AIRadar.filterType('All')" data-type="All" data-i18n="radar_all" class="tab-btn tab-active text-xs">All</button>
+          <button onclick="AIRadar.filterType('Proprietary')" data-type="Proprietary" data-i18n="radar_proprietary" class="tab-btn text-xs">Proprietary</button>
+          <button onclick="AIRadar.filterType('Open Weights')" data-type="Open Weights" data-i18n="radar_open" class="tab-btn text-xs">Open Weights</button>
           <input 
             type="text" 
             id="ai-model-search" 
             data-i18n-placeholder="radar_search"
             placeholder="Search models..." 
-            class="px-3 py-1.5 text-xs bg-slate-900 border border-slate-800 rounded-lg text-slate-200 font-mono focus:outline-none focus:border-sky-500" />
+            class="clean-input px-2.5 py-1 text-xs w-40" />
         </div>
       </div>
 
       <!-- Models Table -->
-      <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden mb-10">
+      <div class="clean-panel overflow-hidden mb-8">
         <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse">
+          <table class="w-full text-left border-collapse text-xs">
             <thead>
-              <tr class="bg-slate-900/90 border-b border-slate-800 text-xs font-mono text-slate-400 uppercase tracking-wider">
-                <th class="p-3.5">Model & Provider</th>
-                <th class="p-3.5">Context Window</th>
-                <th class="p-3.5">Price / 1M Tokens</th>
-                <th class="p-3.5">Coding Benchmark</th>
-                <th class="p-3.5">Inference Speed</th>
-                <th class="p-3.5">Best For</th>
+              <tr class="bg-zinc-900 border-b border-zinc-800 text-[11px] font-mono text-zinc-400 uppercase tracking-wider">
+                <th class="p-3">Model & Provider</th>
+                <th class="p-3">Context Window</th>
+                <th class="p-3">Pricing (1M Tokens)</th>
+                <th class="p-3">Coding Benchmark</th>
+                <th class="p-3">Inference Speed</th>
+                <th class="p-3">Best Use Case</th>
               </tr>
             </thead>
-            <tbody id="ai-models-tbody" class="divide-y divide-slate-800/60">
+            <tbody id="ai-models-tbody" class="divide-y divide-zinc-800/60">
               <!-- Populated by aiRadar.js -->
             </tbody>
           </table>
@@ -499,75 +469,71 @@
       </div>
 
       <!-- Latency Numbers Section -->
-      <div class="glass-panel rounded-2xl p-6 border border-slate-800">
+      <div class="clean-panel p-5">
         <div class="mb-4">
-          <h3 class="text-base font-bold text-white flex items-center gap-2">
-            <span data-i18n="latency_title">⏱️ Latency Numbers Every Developer Should Know</span>
-          </h3>
-          <p data-i18n="latency_desc" class="text-xs text-slate-400 mt-0.5">Logarithmic scale comparison of hardware and network operation durations.</p>
+          <h3 class="text-sm font-semibold text-zinc-100" data-i18n="latency_title">Latency Numbers Every Developer Should Know</h3>
+          <p data-i18n="latency_desc" class="text-xs text-zinc-400 mt-0.5">Logarithmic scale comparison of hardware and network operation durations.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="latency-list">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5" id="latency-list">
           <!-- Populated by aiRadar.js -->
         </div>
       </div>
     </section>
 
     <!-- ----------------------------------------------------------------------
-         TAB 5: DEVTOYS SUITE (EXPANDED WITH CURL CONVERTER & TOKENIZER)
+         TAB 5: DEVTOYS SUITE
          ---------------------------------------------------------------------- -->
     <section id="tab-dev-tools" class="main-tab-content hidden">
-      <div class="mb-6">
-        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          <span data-i18n="toys_title">🛠️ Developer Power Utilities (DevToys Suite)</span>
-        </h2>
-        <p data-i18n="toys_desc" class="text-xs text-slate-400 mt-1">Client-side offline tools for everyday software engineering tasks.</p>
+      <div class="mb-5 pb-3 border-b border-zinc-800/60">
+        <h2 class="text-base font-semibold text-zinc-100" data-i18n="toys_title">Developer Power Tools</h2>
+        <p data-i18n="toys_desc" class="text-xs text-zinc-400 mt-0.5">Essential offline utilities running entirely in your browser with zero latency.</p>
       </div>
 
       <!-- Sub-tool navigation pills -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar">
-        <button onclick="DevTools.switchTool('jwt')" data-tool="jwt" data-i18n="tab_jwt" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🔑 JWT Inspector</button>
-        <button onclick="DevTools.switchTool('curl')" data-tool="curl" data-i18n="tab_curl" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🔄 cURL to Code</button>
-        <button onclick="DevTools.switchTool('tokenizer')" data-tool="tokenizer" data-i18n="tab_tokenizer" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">💰 Tokenizer & Cost</button>
-        <button onclick="DevTools.switchTool('json')" data-tool="json" data-i18n="tab_json" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">✨ JSON Studio</button>
-        <button onclick="DevTools.switchTool('regex')" data-tool="regex" data-i18n="tab_regex" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🔍 Regex Playground</button>
-        <button onclick="DevTools.switchTool('crypto')" data-tool="crypto" data-i18n="tab_crypto" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🔐 Hashes & UUIDs</button>
-        <button onclick="DevTools.switchTool('cron')" data-tool="cron" data-i18n="tab_cron" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">⏰ Cron Humanizer</button>
-        <button onclick="DevTools.switchTool('git')" data-tool="git" data-i18n="tab_git" class="dev-tool-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg border transition-all">🐙 Git Wizard</button>
+      <div class="flex items-center gap-1 overflow-x-auto pb-2 mb-5 no-scrollbar">
+        <button onclick="DevTools.switchTool('jwt')" data-tool="jwt" data-i18n="tab_jwt" class="tab-btn dev-tool-tab-btn tab-active text-xs">JWT Inspector</button>
+        <button onclick="DevTools.switchTool('curl')" data-tool="curl" data-i18n="tab_curl" class="tab-btn dev-tool-tab-btn text-xs">cURL to Code</button>
+        <button onclick="DevTools.switchTool('tokenizer')" data-tool="tokenizer" data-i18n="tab_tokenizer" class="tab-btn dev-tool-tab-btn text-xs">Token Counter</button>
+        <button onclick="DevTools.switchTool('json')" data-tool="json" data-i18n="tab_json" class="tab-btn dev-tool-tab-btn text-xs">JSON Formatter</button>
+        <button onclick="DevTools.switchTool('regex')" data-tool="regex" data-i18n="tab_regex" class="tab-btn dev-tool-tab-btn text-xs">Regex Playground</button>
+        <button onclick="DevTools.switchTool('crypto')" data-tool="crypto" data-i18n="tab_crypto" class="tab-btn dev-tool-tab-btn text-xs">Hashes & UUIDs</button>
+        <button onclick="DevTools.switchTool('cron')" data-tool="cron" data-i18n="tab_cron" class="tab-btn dev-tool-tab-btn text-xs">Cron Parser</button>
+        <button onclick="DevTools.switchTool('git')" data-tool="git" data-i18n="tab_git" class="tab-btn dev-tool-tab-btn text-xs">Git Recipes</button>
       </div>
 
       <!-- 1. JWT Inspector -->
-      <div id="dev-tool-jwt" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
+      <div id="dev-tool-jwt" class="dev-tool-panel clean-panel p-5 space-y-4">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm font-bold text-white">JSON Web Token (JWT) Inspector</h3>
-          <button onclick="DevTools.loadSampleJWT()" class="text-xs text-sky-400 hover:underline font-mono">Load Sample Token</button>
+          <h3 class="text-sm font-semibold text-zinc-100">JSON Web Token (JWT) Inspector</h3>
+          <button onclick="DevTools.loadSampleJWT()" class="text-xs text-blue-400 hover:underline font-mono">Load Sample Token</button>
         </div>
         <textarea 
           id="jwt-input" 
           rows="3" 
           placeholder="Paste your eyJhbGciOi... JWT here" 
-          class="w-full text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-sky-200 focus:outline-none focus:border-sky-500"></textarea>
+          class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 focus:outline-none focus:border-zinc-600"></textarea>
         
         <div id="jwt-status" class="text-xs font-mono py-1"></div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <span class="text-xs font-semibold text-slate-400 font-mono block mb-1">Header</span>
-            <pre id="jwt-header-output" class="text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-purple-300 min-h-[140px] overflow-x-auto">// Header</pre>
+            <span class="text-xs font-mono text-zinc-400 block mb-1">Decoded Header</span>
+            <pre id="jwt-header-output" class="text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-300 min-h-[140px] overflow-x-auto">// Header</pre>
           </div>
           <div>
-            <span class="text-xs font-semibold text-slate-400 font-mono block mb-1">Payload Claims</span>
-            <pre id="jwt-payload-output" class="text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-emerald-300 min-h-[140px] overflow-x-auto">// Payload</pre>
+            <span class="text-xs font-mono text-zinc-400 block mb-1">Payload Claims</span>
+            <pre id="jwt-payload-output" class="text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-emerald-400 min-h-[140px] overflow-x-auto">// Payload</pre>
           </div>
         </div>
       </div>
 
       <!-- 2. cURL to Polyglot Code Converter -->
-      <div id="dev-tool-curl" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+      <div id="dev-tool-curl" class="dev-tool-panel clean-panel p-5 space-y-4 hidden">
         <div class="flex items-center justify-between flex-wrap gap-2">
-          <h3 class="text-sm font-bold text-white">cURL to Polyglot Code Converter</h3>
+          <h3 class="text-sm font-semibold text-zinc-100">cURL to Polyglot Code Converter</h3>
           <div class="flex items-center gap-2">
-            <button onclick="DevTools.loadSampleCurl()" class="text-xs text-sky-400 hover:underline font-mono mr-2">Load Sample cURL</button>
-            <select id="curl-target-lang" class="px-2.5 py-1 text-xs bg-slate-900 border border-slate-700 rounded-lg text-slate-200 font-mono">
+            <button onclick="DevTools.loadSampleCurl()" class="text-xs text-blue-400 hover:underline font-mono mr-2">Load Sample</button>
+            <select id="curl-target-lang" class="clean-input px-2.5 py-1 text-xs">
               <option value="fetch">JavaScript (fetch)</option>
               <option value="python">Python (requests)</option>
               <option value="go">Go (net/http)</option>
@@ -579,46 +545,46 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
-            <span class="text-xs font-mono text-slate-400 block mb-1">Paste cURL Command</span>
+            <span class="text-xs font-mono text-zinc-400 block mb-1">cURL Input</span>
             <textarea 
               id="curl-input" 
-              rows="12" 
+              rows="11" 
               placeholder="curl -X POST https://api.example.com -H 'Content-Type: application/json' -d '{...}'" 
-              class="w-full text-xs font-mono bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-sky-200 focus:outline-none focus:border-sky-500 leading-relaxed"></textarea>
+              class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed"></textarea>
           </div>
           <div>
             <div class="flex items-center justify-between mb-1">
-              <span class="text-xs font-mono text-slate-400">Converted Code</span>
+              <span class="text-xs font-mono text-zinc-400">Converted Code</span>
               <button 
                 onclick="DevTools.copySnippet(document.getElementById('curl-output').textContent)" 
-                class="text-xs text-sky-400 hover:text-sky-300 font-mono px-2 py-0.5 rounded bg-sky-500/10 border border-sky-500/30">
+                class="btn-secondary text-xs px-2 py-0.5 font-mono">
                 Copy
               </button>
             </div>
-            <pre id="curl-output" class="w-full text-xs font-mono bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-emerald-300 min-h-[250px] overflow-x-auto leading-relaxed">// Converted code will appear here...</pre>
+            <pre id="curl-output" class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-emerald-400 min-h-[230px] overflow-x-auto leading-relaxed">// Converted code will appear here...</pre>
           </div>
         </div>
       </div>
 
       <!-- 3. AI Tokenizer & Cost Estimator -->
-      <div id="dev-tool-tokenizer" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+      <div id="dev-tool-tokenizer" class="dev-tool-panel clean-panel p-5 space-y-4 hidden">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm font-bold text-white">AI Tokenizer & API Cost Estimator</h3>
-          <span class="text-xs font-mono text-slate-400">BPE Tokenizer Approximation</span>
+          <h3 class="text-sm font-semibold text-zinc-100">Token Counter & Cost Estimator</h3>
+          <span class="badge-clean">BPE Approximation</span>
         </div>
 
         <div class="grid grid-cols-3 gap-3 text-center">
-          <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs font-mono text-slate-400 block">Estimated Tokens</span>
-            <span id="token-count-val" class="text-lg font-bold text-sky-400 font-mono">0</span>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+            <span class="text-[11px] font-mono text-zinc-400 block">Tokens</span>
+            <span id="token-count-val" class="text-base font-semibold text-zinc-100 font-mono">0</span>
           </div>
-          <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs font-mono text-slate-400 block">Words</span>
-            <span id="token-words-val" class="text-lg font-bold text-purple-400 font-mono">0</span>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+            <span class="text-[11px] font-mono text-zinc-400 block">Words</span>
+            <span id="token-words-val" class="text-base font-semibold text-zinc-100 font-mono">0</span>
           </div>
-          <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs font-mono text-slate-400 block">Characters</span>
-            <span id="token-chars-val" class="text-lg font-bold text-emerald-400 font-mono">0</span>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+            <span class="text-[11px] font-mono text-zinc-400 block">Characters</span>
+            <span id="token-chars-val" class="text-base font-semibold text-zinc-100 font-mono">0</span>
           </div>
         </div>
 
@@ -626,13 +592,13 @@
           <div class="lg:col-span-7">
             <textarea 
               id="tokenizer-input" 
-              rows="8" 
-              placeholder="Paste any prompt, system instruction, or code to count tokens and estimate API inference cost..." 
-              class="w-full text-xs font-mono bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-sky-200 focus:outline-none focus:border-sky-500 leading-relaxed"></textarea>
+              rows="7" 
+              placeholder="Paste any prompt or code to count tokens and estimate API cost..." 
+              class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed"></textarea>
           </div>
           <div class="lg:col-span-5 space-y-2">
-            <span class="text-xs font-mono text-slate-400 block">Cost Per Single Request (Input Tokens):</span>
-            <div id="token-costs-list" class="space-y-2">
+            <span class="text-xs font-mono text-zinc-400 block">Cost Per Single Input Request:</span>
+            <div id="token-costs-list" class="space-y-1.5">
               <!-- Populated by devTools.js -->
             </div>
           </div>
@@ -640,37 +606,37 @@
       </div>
 
       <!-- 4. JSON Studio -->
-      <div id="dev-tool-json" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+      <div id="dev-tool-json" class="dev-tool-panel clean-panel p-5 space-y-4 hidden">
         <div class="flex items-center justify-between flex-wrap gap-2">
-          <h3 class="text-sm font-bold text-white">JSON Formatter, Validator & Minifier</h3>
+          <h3 class="text-sm font-semibold text-zinc-100">JSON Formatter & Validator</h3>
           <div class="flex items-center gap-2">
-            <button onclick="DevTools.loadSampleJSON()" class="text-xs text-sky-400 hover:underline font-mono mr-2">Load Sample</button>
-            <button onclick="DevTools.formatJSON(2)" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Beautify 2</button>
-            <button onclick="DevTools.formatJSON(4)" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Beautify 4</button>
-            <button onclick="DevTools.minifyJSON()" class="text-xs px-2.5 py-1 rounded bg-sky-500 text-slate-950 font-bold hover:bg-sky-400">Minify</button>
+            <button onclick="DevTools.loadSampleJSON()" class="text-xs text-blue-400 hover:underline font-mono mr-2">Load Sample</button>
+            <button onclick="DevTools.formatJSON(2)" class="btn-secondary text-xs px-2.5 py-1">2 Spaces</button>
+            <button onclick="DevTools.formatJSON(4)" class="btn-secondary text-xs px-2.5 py-1">4 Spaces</button>
+            <button onclick="DevTools.minifyJSON()" class="btn-primary text-xs px-2.5 py-1">Minify</button>
           </div>
         </div>
         <textarea 
           id="json-input" 
-          rows="14" 
+          rows="13" 
           placeholder="Paste JSON here..." 
-          class="w-full text-xs font-mono bg-slate-950 p-4 rounded-xl border border-slate-800 text-sky-200 focus:outline-none focus:border-sky-500 leading-relaxed"></textarea>
+          class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 focus:outline-none focus:border-zinc-600 leading-relaxed"></textarea>
         <div id="json-message" class="text-xs font-mono"></div>
       </div>
 
       <!-- 5. Regex Playground -->
-      <div id="dev-tool-regex" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+      <div id="dev-tool-regex" class="dev-tool-panel clean-panel p-5 space-y-4 hidden">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm font-bold text-white">Regular Expression Playground</h3>
-          <span id="regex-match-count" class="text-xs font-mono text-sky-400 font-semibold">0 matches</span>
+          <h3 class="text-sm font-semibold text-zinc-100">Regex Playground</h3>
+          <span id="regex-match-count" class="text-xs font-mono text-zinc-400">0 matches</span>
         </div>
 
         <div class="flex items-center gap-1.5 flex-wrap">
-          <span class="text-xs text-slate-400 font-mono mr-1">Presets:</span>
-          <button onclick="DevTools.applyRegexPreset('^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$', 'gm', 'test@example.com\\ninvalid-email\\nadmin@sub.domain.org')" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Email</button>
-          <button onclick="DevTools.applyRegexPreset('https?:\\\\/\\\\/(www\\\\.)?[-a-zA-Z0-9@:%._\\\\+~#=]{1,256}\\\\.[a-zA-Z0-9()]{1,6}\\\\b([-a-zA-Z0-9()@:%_\\\\+.~#?&//=]*)', 'g', 'Visit https://github.com and http://localhost:3000 now')" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">URL</button>
-          <button onclick="DevTools.applyRegexPreset('\\\\b(?:\\\\d{1,3}\\\\.){3}\\\\d{1,3}\\\\b', 'g', 'Local IP: 192.168.1.1, Gateway: 10.0.0.254, Invalid: 999.999.999')" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">IPv4</button>
-          <button onclick="DevTools.applyRegexPreset('v?(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)(?:-((?:0|[1-9]\\\\d*|\\\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\\\.(?:0|[1-9]\\\\d*|\\\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\\\+([0-9a-zA-Z-]+(?:\\\\.[0-9a-zA-Z-]+)*))?', 'g', 'Releases: v1.2.3, 2.0.0-rc.1, 0.9.4+2025')" class="text-[11px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">SemVer</button>
+          <span class="text-xs text-zinc-500 font-mono mr-1">Presets:</span>
+          <button onclick="DevTools.applyRegexPreset('^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$', 'gm', 'test@example.com\\ninvalid-email\\nadmin@sub.domain.org')" class="btn-secondary text-[11px] px-2 py-0.5">Email</button>
+          <button onclick="DevTools.applyRegexPreset('https?:\\\\/\\\\/(www\\\\.)?[-a-zA-Z0-9@:%._\\\\+~#=]{1,256}\\\\.[a-zA-Z0-9()]{1,6}\\\\b([-a-zA-Z0-9()@:%_\\\\+.~#?&//=]*)', 'g', 'Visit https://github.com and http://localhost:3000 now')" class="btn-secondary text-[11px] px-2 py-0.5">URL</button>
+          <button onclick="DevTools.applyRegexPreset('\\\\b(?:\\\\d{1,3}\\\\.){3}\\\\d{1,3}\\\\b', 'g', 'Local IP: 192.168.1.1, Gateway: 10.0.0.254, Invalid: 999.999.999')" class="btn-secondary text-[11px] px-2 py-0.5">IPv4</button>
+          <button onclick="DevTools.applyRegexPreset('v?(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)(?:-((?:0|[1-9]\\\\d*|\\\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\\\.(?:0|[1-9]\\\\d*|\\\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\\\+([0-9a-zA-Z-]+(?:\\\\.[0-9a-zA-Z-]+)*))?', 'g', 'Releases: v1.2.3, 2.0.0-rc.1, 0.9.4+2025')" class="btn-secondary text-[11px] px-2 py-0.5">SemVer</button>
         </div>
 
         <div class="grid grid-cols-12 gap-3">
@@ -680,7 +646,7 @@
               id="regex-pattern" 
               value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" 
               placeholder="Regex pattern..." 
-              class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-sky-300 focus:outline-none focus:border-sky-500" />
+              class="clean-input w-full p-2.5 text-zinc-100" />
           </div>
           <div class="col-span-3 sm:col-span-2">
             <input 
@@ -688,99 +654,96 @@
               id="regex-flags" 
               value="gm" 
               placeholder="Flags (gm)" 
-              class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-slate-300 focus:outline-none focus:border-sky-500 text-center" />
+              class="clean-input w-full p-2.5 text-center text-zinc-300" />
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <span class="text-xs font-mono text-slate-400 block mb-1">Test String</span>
+            <span class="text-xs font-mono text-zinc-400 block mb-1">Test String</span>
             <textarea 
               id="regex-test-string" 
-              rows="6" 
-              class="w-full text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-slate-200 focus:outline-none focus:border-sky-500">Contact us at support@omnidev.org or dev@company.io for assistance.</textarea>
+              rows="5" 
+              class="w-full text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 focus:outline-none focus:border-zinc-600">Contact us at support@omnidev.org or dev@company.io for assistance.</textarea>
           </div>
           <div>
-            <span class="text-xs font-mono text-slate-400 block mb-1">Live Match Highlights</span>
-            <div id="regex-output" class="text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-slate-200 min-h-[140px] whitespace-pre-wrap leading-relaxed"></div>
+            <span class="text-xs font-mono text-zinc-400 block mb-1">Live Match Highlights</span>
+            <div id="regex-output" class="text-xs font-mono bg-zinc-950 p-3 rounded-lg border border-zinc-800 text-zinc-200 min-h-[110px] whitespace-pre-wrap leading-relaxed"></div>
           </div>
         </div>
       </div>
 
       <!-- 6. Crypto & UUID Studio -->
-      <div id="dev-tool-crypto" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
-        <h3 class="text-sm font-bold text-white">Cryptographic Hashes & UUID Studio</h3>
+      <div id="dev-tool-crypto" class="dev-tool-panel clean-panel p-5 space-y-4 hidden">
+        <h3 class="text-sm font-semibold text-zinc-100">Hashes & UUID Generator</h3>
         
         <div>
-          <label class="text-xs font-mono text-slate-400 block mb-1">Input Text</label>
+          <label class="text-xs font-mono text-zinc-400 block mb-1">Input Text</label>
           <input 
             type="text" 
             id="hash-input" 
             value="Hello OmniDev AI 2026!" 
-            class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-sky-300 focus:outline-none focus:border-sky-500" />
+            class="clean-input w-full p-2" />
         </div>
 
         <div class="space-y-3">
           <div>
-            <span class="text-[11px] font-mono text-slate-400">SHA-256</span>
-            <input type="text" id="hash-sha256" readonly class="w-full text-xs font-mono bg-slate-950/80 p-2 rounded border border-slate-800 text-slate-300" />
+            <span class="text-[11px] font-mono text-zinc-400">SHA-256</span>
+            <input type="text" id="hash-sha256" readonly class="clean-input w-full p-2 text-zinc-300 bg-zinc-950" />
           </div>
           <div>
-            <span class="text-[11px] font-mono text-slate-400">SHA-512</span>
-            <input type="text" id="hash-sha512" readonly class="w-full text-xs font-mono bg-slate-950/80 p-2 rounded border border-slate-800 text-slate-300" />
+            <span class="text-[11px] font-mono text-zinc-400">SHA-512</span>
+            <input type="text" id="hash-sha512" readonly class="clean-input w-full p-2 text-zinc-300 bg-zinc-950" />
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <span class="text-[11px] font-mono text-slate-400">Base64 Encoded</span>
-              <input type="text" id="hash-base64" readonly class="w-full text-xs font-mono bg-slate-950/80 p-2 rounded border border-slate-800 text-slate-300" />
+              <span class="text-[11px] font-mono text-zinc-400">Base64 Encoded</span>
+              <input type="text" id="hash-base64" readonly class="clean-input w-full p-2 text-zinc-300 bg-zinc-950" />
             </div>
             <div>
-              <span class="text-[11px] font-mono text-slate-400">URL Encoded</span>
-              <input type="text" id="hash-url" readonly class="w-full text-xs font-mono bg-slate-950/80 p-2 rounded border border-slate-800 text-slate-300" />
+              <span class="text-[11px] font-mono text-zinc-400">URL Encoded</span>
+              <input type="text" id="hash-url" readonly class="clean-input w-full p-2 text-zinc-300 bg-zinc-950" />
             </div>
           </div>
         </div>
 
         <!-- UUID Generator -->
-        <div class="pt-4 border-t border-slate-800 space-y-2">
+        <div class="pt-3 border-t border-zinc-800 space-y-2">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-semibold text-slate-300">UUID v4 Generator</span>
+            <span class="text-xs font-mono font-medium text-zinc-300">UUID v4 Generator</span>
             <div class="flex items-center gap-1.5">
-              <button onclick="DevTools.generateUUID(1)" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Gen 1</button>
-              <button onclick="DevTools.generateUUID(5)" class="text-xs px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">Gen 5</button>
+              <button onclick="DevTools.generateUUID(1)" class="btn-secondary text-xs px-2.5 py-0.5">Generate 1</button>
+              <button onclick="DevTools.generateUUID(5)" class="btn-secondary text-xs px-2.5 py-0.5">Generate 5</button>
             </div>
           </div>
-          <textarea id="uuid-output" rows="3" readonly class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-emerald-400"></textarea>
+          <textarea id="uuid-output" rows="3" readonly class="w-full text-xs font-mono bg-zinc-950 p-2.5 rounded-lg border border-zinc-800 text-emerald-400"></textarea>
         </div>
       </div>
 
       <!-- 7. Cron Humanizer -->
-      <div id="dev-tool-cron" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
-        <h3 class="text-sm font-bold text-white">Cron Expression Humanizer</h3>
+      <div id="dev-tool-cron" class="dev-tool-panel clean-panel p-5 space-y-4 hidden">
+        <h3 class="text-sm font-semibold text-zinc-100">Cron Expression Parser</h3>
         <div>
-          <label class="text-xs font-mono text-slate-400 block mb-1">Enter 5-part Cron Expression</label>
+          <label class="text-xs font-mono text-zinc-400 block mb-1">Enter 5-part Cron Expression</label>
           <input 
             type="text" 
             id="cron-input" 
             value="*/15 * * * *" 
             placeholder="*/15 * * * *" 
-            class="w-full text-sm font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-sky-400 focus:outline-none focus:border-sky-500 font-bold" />
+            class="clean-input w-full p-3 font-bold text-sm" />
         </div>
-        <div class="p-4 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-300 text-sm font-medium flex items-center gap-2">
-          <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+        <div class="p-3.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-200 text-xs font-mono flex items-center gap-2">
           <span id="cron-description">Runs every 15 minutes</span>
         </div>
       </div>
 
       <!-- 8. Git Wizard -->
-      <div id="dev-tool-git" class="dev-tool-panel glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hidden">
+      <div id="dev-tool-git" class="dev-tool-panel clean-panel p-5 space-y-4 hidden">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm font-bold text-white">Git Disaster Recovery & Everyday Recipes</h3>
-          <span class="text-xs text-slate-400 font-mono">1-click copy commands</span>
+          <h3 class="text-sm font-semibold text-zinc-100">Git Disaster Recovery Recipes</h3>
+          <span class="text-xs text-zinc-500 font-mono">1-click copy commands</span>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="git-scenarios-list">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="git-scenarios-list">
           <!-- Populated by devTools.js -->
         </div>
       </div>
@@ -790,75 +753,67 @@
          TAB 6: CHEATSHEETS & SYSTEM DESIGN CAPACITY CALCULATOR
          ---------------------------------------------------------------------- -->
     <section id="tab-cheatsheets" class="main-tab-content hidden">
-      <div class="mb-6">
-        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          <span data-i18n="arch_title">📚 Architecture & Developer References</span>
-        </h2>
-        <p data-i18n="arch_desc" class="text-xs text-slate-400 mt-1">System design capacity planning calculator and essential cheat sheets.</p>
+      <div class="mb-5 pb-3 border-b border-zinc-800/60">
+        <h2 class="text-base font-semibold text-zinc-100" data-i18n="arch_title">Architecture & System Design</h2>
+        <p data-i18n="arch_desc" class="text-xs text-zinc-400 mt-0.5">High-concurrency capacity calculator and essential developer cheat sheets.</p>
       </div>
 
       <!-- System Design Scale & Capacity Calculator -->
-      <div class="glass-panel rounded-2xl p-6 border border-slate-800 mb-8 space-y-5">
-        <div class="border-b border-slate-800/80 pb-3">
-          <h3 class="text-base font-bold text-white flex items-center gap-2">
-            <span data-i18n="sys_calc_title">📐 System Design Scale & Capacity Calculator</span>
-          </h3>
-          <p data-i18n="sys_calc_desc" class="text-xs text-slate-400 mt-0.5">Estimate QPS, storage, memory, and caching infrastructure based on DAU.</p>
+      <div class="clean-panel p-5 mb-6 space-y-4">
+        <div class="border-b border-zinc-800/80 pb-2">
+          <h3 class="text-sm font-semibold text-zinc-100" data-i18n="sys_calc_title">System Design Capacity Calculator</h3>
+          <p data-i18n="sys_calc_desc" class="text-xs text-zinc-400 mt-0.5">Estimate QPS, storage growth, bandwidth, and cache RAM requirements based on DAU.</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <div>
-            <label data-i18n="dau_label" class="block text-xs font-mono text-slate-400 mb-1">Daily Active Users (DAU)</label>
-            <input type="number" id="sys-dau" value="10000000" step="1000000" class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-sky-400 font-bold focus:outline-none focus:border-sky-500" />
+            <label data-i18n="dau_label" class="block text-xs font-mono text-zinc-400 mb-1">Daily Active Users (DAU)</label>
+            <input type="number" id="sys-dau" value="10000000" step="1000000" class="clean-input w-full p-2 text-zinc-100" />
           </div>
           <div>
-            <label data-i18n="reads_label" class="block text-xs font-mono text-slate-400 mb-1">Reads per User/Day</label>
-            <input type="number" id="sys-reads" value="50" step="5" class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-sky-400 font-bold focus:outline-none focus:border-sky-500" />
+            <label data-i18n="reads_label" class="block text-xs font-mono text-zinc-400 mb-1">Reads per User / Day</label>
+            <input type="number" id="sys-reads" value="50" step="5" class="clean-input w-full p-2 text-zinc-100" />
           </div>
           <div>
-            <label data-i18n="writes_label" class="block text-xs font-mono text-slate-400 mb-1">Writes per User/Day</label>
-            <input type="number" id="sys-writes" value="5" step="1" class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-sky-400 font-bold focus:outline-none focus:border-sky-500" />
+            <label data-i18n="writes_label" class="block text-xs font-mono text-zinc-400 mb-1">Writes per User / Day</label>
+            <input type="number" id="sys-writes" value="5" step="1" class="clean-input w-full p-2 text-zinc-100" />
           </div>
           <div>
-            <label data-i18n="payload_label" class="block text-xs font-mono text-slate-400 mb-1">Avg Payload Size (KB)</label>
-            <input type="number" id="sys-payload" value="2" step="0.5" class="w-full text-xs font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-sky-400 font-bold focus:outline-none focus:border-sky-500" />
+            <label data-i18n="payload_label" class="block text-xs font-mono text-zinc-400 mb-1">Avg Payload Size (KB)</label>
+            <input type="number" id="sys-payload" value="2" step="0.5" class="clean-input w-full p-2 text-zinc-100" />
           </div>
         </div>
 
         <!-- Calculated Metrics Outputs -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
-          <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs font-mono text-slate-400 block mb-1">Average QPS (Throughput)</span>
-            <div id="sys-res-qps" class="font-mono text-sm font-bold text-sky-400">Loading...</div>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+            <span class="text-[11px] font-mono text-zinc-400 block mb-1">Average QPS (Throughput)</span>
+            <div id="sys-res-qps" class="font-mono text-sm font-semibold text-zinc-100">Loading...</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs font-mono text-slate-400 block mb-1">Peak QPS (2.5x Multiplier)</span>
-            <div id="sys-res-peak-qps" class="font-mono text-sm font-bold text-amber-400">Loading...</div>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+            <span class="text-[11px] font-mono text-zinc-400 block mb-1">Peak QPS (2.5x Multiplier)</span>
+            <div id="sys-res-peak-qps" class="font-mono text-sm font-semibold text-amber-400">Loading...</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs font-mono text-slate-400 block mb-1">Yearly Storage Growth</span>
-            <div id="sys-res-storage-year" class="font-mono text-sm font-bold text-purple-400">Loading...</div>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+            <span class="text-[11px] font-mono text-zinc-400 block mb-1">Yearly Storage Growth</span>
+            <div id="sys-res-storage-year" class="font-mono text-sm font-semibold text-zinc-100">Loading...</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs font-mono text-slate-400 block mb-1">RAM Needed for Caching</span>
-            <div id="sys-res-ram" class="font-mono text-sm font-bold text-emerald-400">Loading...</div>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+            <span class="text-[11px] font-mono text-zinc-400 block mb-1">Cache Memory (80/20 Rule)</span>
+            <div id="sys-res-ram" class="font-mono text-sm font-semibold text-emerald-400">Loading...</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 sm:col-span-2">
-            <span class="text-xs font-mono text-slate-400 block mb-1">Network Bandwidth</span>
-            <div id="sys-res-bandwidth" class="font-mono text-sm font-bold text-indigo-400">Loading...</div>
+          <div class="p-3 rounded-lg bg-zinc-950 border border-zinc-800 sm:col-span-2">
+            <span class="text-[11px] font-mono text-zinc-400 block mb-1">Network Bandwidth</span>
+            <div id="sys-res-bandwidth" class="font-mono text-sm font-semibold text-zinc-100">Loading...</div>
           </div>
         </div>
       </div>
 
       <!-- HTTP Status Codes Grid -->
-      <div class="space-y-6">
-        <div>
-          <h3 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
-            <span data-i18n="http_title">🌐 HTTP Response Status Codes</span>
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="cheatsheet-http-grid">
-            <!-- Populated by app.js -->
-          </div>
+      <div class="space-y-4">
+        <h3 class="text-sm font-semibold text-zinc-100" data-i18n="http_title">HTTP Response Status Codes</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5" id="cheatsheet-http-grid">
+          <!-- Populated by app.js -->
         </div>
       </div>
     </section>
@@ -867,14 +822,12 @@
          TAB 7: AWESOME DIRECTORY
          ---------------------------------------------------------------------- -->
     <section id="tab-awesome-ai" class="main-tab-content hidden">
-      <div class="mb-6">
-        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          <span data-i18n="dir_title">⭐ Curated Awesome AI & Developer Tools</span>
-        </h2>
-        <p data-i18n="dir_desc" class="text-xs text-slate-400 mt-1">Hand-picked top tier open-source agents, frameworks, and productivity tools.</p>
+      <div class="mb-5 pb-3 border-b border-zinc-800/60">
+        <h2 class="text-base font-semibold text-zinc-100" data-i18n="dir_title">Curated AI Ecosystem</h2>
+        <p data-i18n="dir_desc" class="text-xs text-zinc-400 mt-0.5">Hand-picked, high-impact open-source developer tools, agents, and frameworks.</p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="awesome-tools-grid">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="awesome-tools-grid">
         <!-- Populated by app.js -->
       </div>
     </section>
@@ -882,44 +835,44 @@
   </main>
 
   <!-- ========================================================================
-       COMMAND PALETTE MODAL (Ctrl + K)
+       COMMAND PALETTE MODAL (Ctrl + K / Cmd + K)
        ======================================================================== -->
-  <div id="command-palette-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-20 p-4 hidden">
-    <div class="w-full max-w-xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-      <div class="p-3 border-b border-slate-800 flex items-center gap-2.5">
-        <svg class="w-4 h-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <div id="command-palette-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-20 p-4 hidden">
+    <div class="w-full max-w-xl bg-zinc-900 border border-zinc-700/80 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-100">
+      <div class="p-3 border-b border-zinc-800 flex items-center gap-2">
+        <svg class="w-4 h-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input 
           type="text" 
           id="palette-input" 
           data-i18n-placeholder="search_placeholder"
-          placeholder="Search prompts, MCP servers, dev tools, or AI models..." 
-          class="w-full text-xs font-mono bg-transparent text-white placeholder-slate-500 focus:outline-none" />
-        <kbd onclick="App.closeCommandPalette()" class="px-1.5 py-0.5 text-[10px] bg-slate-800 border border-slate-700 rounded font-mono text-slate-400 cursor-pointer">ESC</kbd>
+          placeholder="Search tools, prompts, MCPs..." 
+          class="w-full text-xs font-mono bg-transparent text-white placeholder-zinc-500 focus:outline-none" />
+        <span onclick="App.closeCommandPalette()" class="kbd-shortcut cursor-pointer">ESC</span>
       </div>
-      <div id="palette-results" class="max-h-80 overflow-y-auto p-2 space-y-1">
+      <div id="palette-results" class="max-h-80 overflow-y-auto p-1.5 space-y-0.5">
         <!-- Populated dynamically -->
       </div>
     </div>
   </div>
 
   <!-- ========================================================================
-       FOOTER
+       MINIMALIST FOOTER
        ======================================================================== -->
-  <footer class="mt-20 border-t border-slate-800/80 bg-slate-950/60 py-8 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+  <footer class="mt-20 border-t border-[#27272a] bg-[#09090b] py-6 text-xs text-zinc-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
-        <span class="font-bold text-slate-300">OmniDev</span>
+        <span class="font-medium text-zinc-300">OmniDev</span>
         <span>•</span>
-        <span><span data-i18n="footer_crafted">Crafted with ❤️ by</span> <a href="https://github.com/ilynx69" target="_blank" class="text-sky-400 hover:underline font-medium">ilynx69</a></span>
+        <span><span data-i18n="footer_crafted">Designed and built by</span> <a href="https://github.com/ilynx69" target="_blank" class="text-zinc-300 hover:text-white font-medium underline underline-offset-2">ilynx69</a></span>
       </div>
-      <div class="flex items-center gap-4 text-slate-400">
-        <span data-i18n="footer_polyglot_notice">Written in JavaScript, Python, Rust, and TypeScript.</span>
+      <div class="flex items-center gap-3 text-zinc-400">
+        <span data-i18n="footer_polyglot_notice">Polyglot codebase in JavaScript, Python, Rust, and TypeScript.</span>
         <span>•</span>
-        <a href="https://github.com/ilynx69/awesome-ai-devtools" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+        <a href="https://github.com/ilynx69/awesome-ai-devtools" target="_blank" class="hover:text-zinc-200 transition-colors">GitHub</a>
         <span>•</span>
-        <a href="https://github.com/ilynx69/awesome-ai-devtools/blob/main/LICENSE" target="_blank" class="hover:text-white transition-colors">MIT</a>
+        <a href="https://github.com/ilynx69/awesome-ai-devtools/blob/main/LICENSE" target="_blank" class="hover:text-zinc-200 transition-colors">MIT</a>
       </div>
     </div>
   </footer>

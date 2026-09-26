@@ -21,14 +21,14 @@ const PromptStudio = {
     container.innerHTML = categories.map(cat => `
       <button 
         onclick="PromptStudio.filterCategory('${cat}')"
-        class="category-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${this.activeCategory === cat ? 'bg-sky-500/20 text-sky-400 border border-sky-500/40 shadow-sm' : 'bg-slate-800/40 text-slate-400 hover:text-white border border-slate-700/50'}">
+        class="tab-btn ${this.activeCategory === cat ? 'tab-active' : ''} text-xs">
         ${cat}
       </button>
     `).join('');
   },
 
   filterCategory(category) {
-    window.soundEngine.playClick();
+    if (window.soundEngine) window.soundEngine.playClick();
     this.activeCategory = category;
     this.renderCategories();
     this.renderPromptCards();
@@ -48,7 +48,7 @@ const PromptStudio = {
     });
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div class="p-6 text-center text-slate-500 text-sm">No prompts found matching "${searchTerm}".</div>`;
+      container.innerHTML = `<div class="p-6 text-center text-zinc-500 text-xs">No prompts found matching "${searchTerm}".</div>`;
       return;
     }
 
@@ -57,20 +57,20 @@ const PromptStudio = {
       return `
         <div 
           onclick="PromptStudio.selectPrompt('${p.id}')"
-          class="p-4 rounded-xl cursor-pointer transition-all border ${isSelected ? 'bg-sky-500/10 border-sky-500/50 shadow-md shadow-sky-500/10' : 'bg-slate-900/60 hover:bg-slate-800/50 border-slate-800 hover:border-slate-700'}">
-          <div class="flex items-center justify-between gap-2 mb-1.5">
-            <span class="badge-tech bg-sky-950/80 text-sky-300 border border-sky-700/40 text-[10px]">${p.category}</span>
-            <span class="text-[10px] text-slate-400 font-mono">${p.badge}</span>
+          class="p-3 rounded-lg cursor-pointer transition-all border ${isSelected ? 'bg-zinc-800/80 border-zinc-600 text-white' : 'bg-zinc-900/40 border-zinc-800/80 hover:bg-zinc-800/40 hover:border-zinc-700 text-zinc-300'}">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="badge-clean text-[10px]">${p.category}</span>
+            <span class="text-[10px] text-zinc-500 font-mono">${p.badge}</span>
           </div>
-          <h4 class="font-semibold text-sm text-slate-200 line-clamp-1">${p.title}</h4>
-          <p class="text-xs text-slate-400 mt-1 line-clamp-2">${p.description}</p>
+          <h4 class="font-medium text-xs text-zinc-200 line-clamp-1">${p.title}</h4>
+          <p class="text-[11px] text-zinc-400 mt-0.5 line-clamp-2">${p.description}</p>
         </div>
       `;
     }).join('');
   },
 
   selectPrompt(id) {
-    window.soundEngine.playClick();
+    if (window.soundEngine) window.soundEngine.playClick();
     const prompt = OMNI_DATA.prompts.find(p => p.id === id);
     if (!prompt) return;
     this.currentPrompt = prompt;
@@ -87,30 +87,30 @@ const PromptStudio = {
     document.getElementById('prompt-detail-desc').textContent = this.currentPrompt.description;
 
     if (!this.currentPrompt.variables || this.currentPrompt.variables.length === 0) {
-      container.innerHTML = `<p class="text-xs text-slate-500">No variables required for this prompt.</p>`;
+      container.innerHTML = `<p class="text-xs text-zinc-500">No variables required for this prompt.</p>`;
       return;
     }
 
     container.innerHTML = this.currentPrompt.variables.map(v => {
       const isLong = v.default.length > 50 || v.default.includes('\n');
       return `
-        <div class="space-y-1.5">
-          <label class="block text-xs font-semibold text-slate-300 font-mono flex items-center justify-between">
+        <div class="space-y-1">
+          <label class="block text-xs font-medium text-zinc-300 font-mono flex items-center justify-between">
             <span>{{${v.key}}}</span>
-            <span class="text-[11px] font-normal text-slate-400">${v.label}</span>
+            <span class="text-[11px] font-normal text-zinc-400">${v.label}</span>
           </label>
           ${isLong ? `
             <textarea 
               data-var="${v.key}" 
               rows="3" 
-              class="w-full text-xs font-mono bg-slate-950 border border-slate-700/70 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all resize-y"
+              class="clean-input w-full p-2.5 text-xs text-zinc-200 resize-y"
               oninput="PromptStudio.updatePreview()">${v.default}</textarea>
           ` : `
             <input 
               type="text" 
               data-var="${v.key}" 
               value="${v.default}" 
-              class="w-full text-xs font-mono bg-slate-950 border border-slate-700/70 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
+              class="clean-input w-full p-2 text-xs text-zinc-200"
               oninput="PromptStudio.updatePreview()" />
           `}
         </div>
