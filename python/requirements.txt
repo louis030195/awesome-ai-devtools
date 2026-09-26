@@ -1,0 +1,4 @@
+# OmniDev Python Requirements
+# Standard library only for base functionality; optional packages:
+requests>=2.31.0
+pydantic>=2.5.0

@@ -8,6 +8,7 @@ const App = {
 
   init() {
     this.initTheme();
+    if (window.i18n) window.i18n.init();
     this.buildSearchIndex();
     this.bindGlobalEvents();
     this.renderAwesomeDirectory();
@@ -15,6 +16,7 @@ const App = {
 
     // Initialize Submodules
     PromptStudio.init();
+    if (window.AIEngine) window.AIEngine.init();
     MCPBuilder.init();
     AIRadar.init();
     DevTools.init();
@@ -29,7 +31,7 @@ const App = {
   },
 
   switchTab(tabId) {
-    window.soundEngine.playClick();
+    if (window.soundEngine) window.soundEngine.playClick();
     this.currentTab = tabId;
     window.location.hash = tabId;
 
@@ -60,6 +62,13 @@ const App = {
   buildSearchIndex() {
     this.searchIndex = [];
 
+    // Neural Copilot
+    this.searchIndex.push({
+      title: "Neural Copilot (Free AI Assistant)",
+      subtitle: "AI Assistant, Code Lab & Vulnerability Auditor",
+      action: () => this.switchTab('neural-copilot')
+    });
+
     // Index prompts
     OMNI_DATA.prompts.forEach(p => {
       this.searchIndex.push({
@@ -86,9 +95,11 @@ const App = {
     // Index DevTools
     const tools = [
       { name: "JWT Inspector & Decoder", id: "jwt" },
+      { name: "cURL to Polyglot Code Converter", id: "curl" },
       { name: "JSON Formatter & Validator", id: "json" },
       { name: "Regex Playground & Tester", id: "regex" },
       { name: "Cryptographic Hash & UUID Studio", id: "crypto" },
+      { name: "AI Tokenizer & Cost Estimator", id: "tokenizer" },
       { name: "Cron Expression Humanizer", id: "cron" },
       { name: "Git Disaster Recovery Wizard", id: "git" }
     ];

@@ -135,6 +135,16 @@ const PromptStudio = {
     previewEl.value = output;
   },
 
+  sendToCopilot() {
+    const previewEl = document.getElementById('prompt-preview-output');
+    if (!previewEl || !previewEl.value) return;
+    if (window.AIEngine) {
+      window.AIEngine.sendPromptFromStudio(previewEl.value);
+      if (window.soundEngine) window.soundEngine.playSuccess();
+      window.showToast("Sent to AI Copilot!", "success");
+    }
+  },
+
   copyPrompt() {
     const previewEl = document.getElementById('prompt-preview-output');
     if (!previewEl) return;
